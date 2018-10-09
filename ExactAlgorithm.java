@@ -113,7 +113,7 @@ public class ExactAlgorithm
                 if(DEBUG) System.out.println(COMMENT + " Warning: vertex "+x+" didn't appear in any edge : it will be considered a disconnected vertex on its own.");
             }
         }
-        
+
         getChromaticNumber(e, n);
 
     }
@@ -162,7 +162,7 @@ public class ExactAlgorithm
         * Similarly, for partitions of 10 things into 3 different sets,
         * enumerate all 10-digit base 3 numbers.
         */
-        int maxPartitions = (int)Math.pow(colors, numberOfVertices);
+        long maxPartitions = (long)Math.pow(colors, numberOfVertices);
 
         // if(DEBUG) System.out.println("Max particions: " + maxPartitions);
 
