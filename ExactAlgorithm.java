@@ -7,7 +7,7 @@ class ColEdge
     int v;
 }
 
-public class ReadGraph
+public class ExactAlgorithm
 {
 
     public final static boolean DEBUG = true;
@@ -113,54 +113,22 @@ public class ReadGraph
                 if(DEBUG) System.out.println(COMMENT + " Warning: vertex "+x+" didn't appear in any edge : it will be considered a disconnected vertex on its own.");
             }
         }
-
-        //! At this point e[0] will be the first edge, with e[0].u referring to one endpoint and e[0].v to the other
-        //! e[1] will be the second edge...
-        //! (and so on)
-        //! e[m-1] will be the last edge
-        //!
-        //! there will be n vertices in the graph, numbered 1 to n
-
-        //! INSERT YOUR CODE HERE!
-
-
-        int[] listOfColorsPerVertexA = {0, 1, 2, 3, 3, 1, 2}; // correct
-        if(isGraphColoringCorrect(e, listOfColorsPerVertexA)) {
-            System.out.println("Correct colors A!");
-        }
-
-        int[] listOfColorsPerVertexB = {0, 2, 2, 3, 3, 1, 2}; // wrong
-        if(isGraphColoringCorrect(e, listOfColorsPerVertexB)) {
-            System.out.println("Correct colors B!");
-        }
-
-    }
-
-    public static boolean isGraphColoringCorrect(ColEdge[] listOfEdges, int[] listOfColorsPerVertex) {
-
-        for(int i = 0; i < listOfEdges.length; i++) {
-
-            ColEdge edge = listOfEdges[i];
-
-            // check wether nodes on the same edge are having the same color assigned
-            if(listOfColorsPerVertex[edge.u] == listOfColorsPerVertex[edge.v]) {
-                return false;
-            }
-
-        }
-
-        return true;
+        
+        getChromaticNumber(e, n);
 
     }
 
     // numberOfVertices or upper bound
     public static int getChromaticNumber(ColEdge[] listOfEdges, int numberOfVertices) {
 
-        for(int colors = 1; colors < numberOfVertices; colors++) {
+        for(int colors = 1; colors <= numberOfVertices; colors++) {
 
             if(checkAllParticions(listOfEdges, numberOfVertices, colors)) {
+                if(DEBUG) System.out.println("Chromatic number: " + colors);
                 return colors;
             }
+
+            if(DEBUG) System.out.println("Lower bound: " + colors);
 
         }
 
@@ -168,6 +136,18 @@ public class ReadGraph
 
     }
 
+    // this function attemts to find all particions of vertices in given amount of colors
+    // iterating over particions is difficult, so this algorithm uses counting as an
+    // easy way to list all particions even tough some will be repeating
+    // assume nodes A B C D
+    // you can split them into two sets by assigning 0 or 1 to each node
+    // e.g.: A=0 B=0 C=0 D=0
+    //       A=0 B=0 C=0 D=1
+    //       A=0 B=0 C=1 D=0
+    //       A=0 B=0 C=1 D=1
+    // The list above is basically counting from 0 to 3 in binary
+    // If you want to split them into three sets you cen just count in base 3 system
+    // Then for each possible particioning/coloring we check whether it is correct
     public static boolean checkAllParticions(ColEdge[] listOfEdges, int numberOfVertices, int colors) {
 
         /**
@@ -182,12 +162,17 @@ public class ReadGraph
         * Similarly, for partitions of 10 things into 3 different sets,
         * enumerate all 10-digit base 3 numbers.
         */
-        int maxPartitions = Math.pow(numberOfVertices, colors);
+        int maxPartitions = (int)Math.pow(colors, numberOfVertices);
 
-        int[] listOfColorsPerVertex;
-        for(int i = 0; i < maxPartitions; i++) {
+        // if(DEBUG) System.out.println("Max particions: " + maxPartitions);
 
-            nextlistOfColorsPerVertex(listOfColorsPerVertex, colors);
+        // assignes a color to each vertex
+        // NOTICE! vertices are indexed from 1, i.e. there is no vertex 0
+        //         so we need to ignore index 0 in this array
+        int[] listOfColorsPerVertex = new int[numberOfVertices + 1];
+        for(int i = 0; i < (maxPartitions - 1); i++) {
+
+            increment(listOfColorsPerVertex, colors);
 
             if(isGraphColoringCorrect(listOfEdges, listOfColorsPerVertex)) {
                 return true;
@@ -199,24 +184,44 @@ public class ReadGraph
 
     }
 
-    public static void nextlistOfColorsPerVertex(int[] listOfColorsPerVertex, colors) {
+    // counting in arbitrary base
+    // array of integers represents digits of a numbers
+    // first we increase least significant digit, and then we do carry
+    // e.g. wehn counting from 9 to 10 in decimal system we give as input
+    // number = {0, 9}, base = 10
+    // the lest significant digit gets incremented i.e. number = {0, 10}
+    // but decimal sistem has not digit 10, so we carry 1 i.e. number = {1, 0}
+    public static void increment(int[] number, int base) {
 
-        // TODO - this whole loop may be rewriten ...
-        for(int i = listOfColorsPerVertex.length - 1; i <= 1; i--) {
+        number[(number.length - 1)]++;
+        for(int i = (number.length - 1); i >= 0; i--) {
 
-            if(listOfColorsPerVertex[i] < colors - 1) {
-
-                listOfColorsPerVertex[i]++;
-                return;
-
+            if(number[i] > (base - 1)) {
+                number[i] = 0;
+                number[i - 1]++;
             } else {
-
-                // TODO
-
+                return;
             }
 
+        }
+
+    }
+
+    // check wether vertices on the same edge are having the same color assigned
+    public static boolean isGraphColoringCorrect(ColEdge[] listOfEdges, int[] listOfColorsPerVertex) {
+
+        for(int i = 0; i < listOfEdges.length; i++) {
+
+            ColEdge edge = listOfEdges[i];
+
+            // check wether nodes on the same edge are having the same color assigned
+            if(listOfColorsPerVertex[edge.u] == listOfColorsPerVertex[edge.v]) {
+                return false;
+            }
 
         }
+
+        return true;
 
     }
 
