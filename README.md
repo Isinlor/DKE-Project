@@ -2,6 +2,8 @@
 
 ![Gantt CHart](https://raw.githubusercontent.com/dke-group-23/DKE-Project/master/DKE%20Project%20-%20Gantt%20Chart.png "Gantt Chart")
 
+The book ["A Guide to Graph Colouring Algorithms and Applications"](http://opencarts.org/sachlaptrinh/pdf/16446.pdf) is good source.
+
 How to get started:
  - [read trough project description, pay specific attention to highlights](https://github.com/dke-group-23/DKE-Project/blob/master/project%201-1.pdf)
  - Install [GitHub Desktop](https://desktop.github.com/). GitHub will help us efficiently cooperate on code i.e. keep track of changes, merge changes, keep track of issues. Git itself is quite complex, but GitHub Desktop and Web should make it digestible.
