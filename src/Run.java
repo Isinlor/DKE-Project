@@ -18,7 +18,7 @@ public class Run {
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Graph graph = (new Random()).generate(3, 3);
+        // Graph graph = (new Random()).generate(4, 3);
         Graph graph = (new FileLoader()).load("../graphs/custom/graph.txt");
 
         GraphPanel graphPanel = new GraphPanel(graph);
