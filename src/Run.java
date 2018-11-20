@@ -12,12 +12,8 @@ public class Run {
         // initialize main window
         JFrame window = new JFrame();
 
-        System.out.println(WINDOW_WIDTH + window.getInsets().right + window.getInsets().left);
-        System.out.println(WINDOW_HEIGHT + window.getInsets().top + window.getInsets().bottom);
-
         window.getContentPane().setPreferredSize(new Dimension(
-            WINDOW_WIDTH + window.getInsets().right + window.getInsets().left,
-            WINDOW_HEIGHT + window.getInsets().top + window.getInsets().bottom
+            WINDOW_WIDTH, WINDOW_HEIGHT
         ));
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
