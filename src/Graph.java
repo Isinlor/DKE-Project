@@ -39,7 +39,7 @@ public class Graph {
         this.adjacencyMatrix = adjacencyMatrix;
         this.numberOfVertices = numberOfVertices;
 
-        Edge[] edges = new Edge[numberOfEdges];
+        edges = new Edge[numberOfEdges];
 
         int counter = 0;
         for(int i = 1; i <= numberOfVertices; i++) {
