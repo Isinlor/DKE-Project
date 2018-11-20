@@ -70,6 +70,10 @@ public class Graph {
 
     }
 
+    public int getNumberOfVertices() {
+        return numberOfVertices;
+    }
+
     /**
      * Returns the number of vertices.
      */
