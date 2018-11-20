@@ -68,10 +68,10 @@ public class FileLoader {
                     Integer.parseInt(data[0]),
                     Integer.parseInt(data[1])
                 );
-                seen[ e[d].u ] = true;
-                seen[ e[d].v ] = true;
+                seen[ e[d].from ] = true;
+                seen[ e[d].to ] = true;
 
-                if(DEBUG) System.out.println(COMMENT + " Edge: "+ e[d].u +" "+e[d].v);
+                if(DEBUG) System.out.println(COMMENT + " Edge: "+ e[d].from +" "+e[d].to);
 
             }
 

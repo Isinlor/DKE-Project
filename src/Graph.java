@@ -27,8 +27,8 @@ public class Graph {
         for(int i=0; i < edges.length; i++) {
 
             // fill adjacency matrix in standard format
-            adjacencyMatrix[edges[i].u][edges[i].v] = 1;
-            adjacencyMatrix[edges[i].v][edges[i].u] = 1;
+            adjacencyMatrix[edges[i].from][edges[i].to] = 1;
+            adjacencyMatrix[edges[i].to][edges[i].from] = 1;
 
         }
 

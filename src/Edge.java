@@ -5,12 +5,12 @@
  */
 public class Edge {
 
-	public int u;
-	public int v;
+	public int from;
+	public int to;
 
-	public Edge(int u, int v) {
-		this.u = u;
-		this.v = v;
+	public Edge(int from, int to) {
+		this.from = from;
+		this.to = to;
 	}
 
 }
