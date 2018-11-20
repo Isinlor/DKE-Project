@@ -132,7 +132,7 @@ public class GraphPanel extends JPanel {
             for(int swapB = 1; swapB <= graph.getNumberOfVertices(); swapB++) {
 
                 if(counter > limitOfIterations) {
-                    continue;
+                    return;
                 }
 
                 swapCoordinates(swapA, swapB);
