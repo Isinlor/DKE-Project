@@ -118,6 +118,11 @@ public class GraphPanel extends JPanel {
 
     }
 
+    /**
+     * Optimizes vertices location based on swaping each vertex position.
+     *
+     * @param limitOfIterations Allows to limit number of swaps for big graphs.
+     */
     protected void optimizeStrategyA(int limitOfIterations) {
 
         int counter = 0;
@@ -130,95 +135,80 @@ public class GraphPanel extends JPanel {
                     continue;
                 }
 
-                VertexCoordinates a = coordinates[swapA];
-                VertexCoordinates b = coordinates[swapB];
-
-                coordinates[swapA] = b;
-                coordinates[swapB] = a;
-
-                int distance = 0;
-
-                for(int j = 0; j < graph.getEdges().length; j++) {
-
-                    Edge edge = graph.getEdges()[j];
-
-                    int vertexFrom = edge.from;
-                    int vertexTo = edge.to;
-
-                    VertexCoordinates from = coordinates[vertexFrom];
-                    VertexCoordinates to = coordinates[vertexTo];
-
-                    distance += Math.abs(from.x-to.x) + Math.abs(from.y-to.y);
-
-                }
-
+                swapCoordinates(swapA, swapB);
+                int distance = computeTotalDistance();
                 if(minDistance > distance) {
-
                     minDistance = distance;
-
                 } else {
-
-                    a = coordinates[swapA];
-                    b = coordinates[swapB];
-
-                    coordinates[swapA] = b;
-                    coordinates[swapB] = a;
-
+                    swapCoordinates(swapA, swapB);
                 }
 
                 counter++;
 
             }
+
         }
 
     }
 
+    /**
+     * Optimizes vertices location based on random swaps.
+     *
+     * @param iterations Number of random swaps to test.
+     */
     protected void optimizeStrategyB(int iterations) {
 
         int minDistance = Integer.MAX_VALUE;
         for(int i = 0; i < iterations; i++) {
 
-            int distance = 0;
-
             int swapA = (int)(Math.random()*graph.getNumberOfVertices())+1;
             int swapB = (int)(Math.random()*graph.getNumberOfVertices())+1;
 
-            VertexCoordinates a = coordinates[swapA];
-            VertexCoordinates b = coordinates[swapB];
-
-            coordinates[swapA] = b;
-            coordinates[swapB] = a;
-
-            for(int j = 0; j < graph.getEdges().length; j++) {
-
-                Edge edge = graph.getEdges()[j];
-
-                int vertexFrom = edge.from;
-                int vertexTo = edge.to;
-
-                VertexCoordinates from = coordinates[vertexFrom];
-                VertexCoordinates to = coordinates[vertexTo];
-
-                distance += Math.abs(from.x-to.x) + Math.abs(from.y-to.y);
-
-            }
-
+            swapCoordinates(swapA, swapB);
+            int distance = computeTotalDistance();
             if(minDistance > distance) {
-
                 minDistance = distance;
-
             } else {
-
-                a = coordinates[swapA];
-                b = coordinates[swapB];
-
-                coordinates[swapA] = b;
-                coordinates[swapB] = a;
-
+                swapCoordinates(swapA, swapB);
             }
 
         }
 
+    }
+
+    protected void swapCoordinates(int swapA, int swapB) {
+
+        VertexCoordinates a = coordinates[swapA];
+        VertexCoordinates b = coordinates[swapB];
+
+        coordinates[swapA] = b;
+        coordinates[swapB] = a;
+
+    }
+
+    /**
+     * Computes total length of all edges based on vertices coordinates.
+     *
+     * Notice! The length is not euclidean. It's manhattan distance.
+     *
+     * @return Total length of edges.
+     */
+    protected int computeTotalDistance() {
+        int distance = 0;
+        for(int j = 0; j < graph.getEdges().length; j++) {
+
+            Edge edge = graph.getEdges()[j];
+
+            int vertexFrom = edge.from;
+            int vertexTo = edge.to;
+
+            VertexCoordinates from = coordinates[vertexFrom];
+            VertexCoordinates to = coordinates[vertexTo];
+
+            distance += Math.abs(from.x-to.x) + Math.abs(from.y-to.y);
+
+        }
+        return distance;
     }
 
 }
