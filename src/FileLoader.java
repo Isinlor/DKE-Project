@@ -3,7 +3,7 @@ import java.util.*;
 
 public class FileLoader {
 
-    public final static boolean DEBUG = true;
+    public final static boolean DEBUG = false;
 
     public final static String COMMENT = "//";
 
