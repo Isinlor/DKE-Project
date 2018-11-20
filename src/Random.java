@@ -22,7 +22,8 @@ public class Random {
 
         int[][] adjacencyMatrix = new int[vertices + 1][vertices + 1];
 
-        while(edges > 0) {
+        int edgesToMake = edges;
+        while(edgesToMake > 0) {
 
             int x = (int)(Math.random() * vertices) + 1;
             int y = (int)(Math.random() * vertices) + 1;
@@ -30,7 +31,7 @@ public class Random {
             if(x > y && adjacencyMatrix[x][y] == 0) {
                 adjacencyMatrix[x][y] = 1;
                 adjacencyMatrix[y][x] = 1;
-                edges--;
+                edgesToMake--;
             }
 
         }
