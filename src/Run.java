@@ -9,22 +9,28 @@ public class Run {
 
     public static void main(String[] args) {
 
-        // initialize main window
-        JFrame window = new JFrame();
+        // Frame and content pane explanation:
+        // https://docs.oracle.com/javase/tutorial/uiswing/components/toplevel.html
 
-        window.getContentPane().setPreferredSize(new Dimension(
+        JFrame window = new JFrame();
+        Container contentPane = window.getContentPane();
+
+        // exit after clicking close button
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // define size of content pane; allows to avoid issues with accounting
+        // for title bar (the thing with close button)
+        contentPane.setPreferredSize(new Dimension(
             WINDOW_WIDTH, WINDOW_HEIGHT
         ));
-
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Graph graph = (new Random()).generate(4, 3);
         Graph graph = (new FileLoader()).load("../graphs/custom/graph.txt");
 
-        GraphPanel graphPanel = new GraphPanel(graph);
+        contentPane.add(new GraphScreen(graph));
 
-        window.add(graphPanel);
-
+        // Sets windows size so that everything inside have at least preffered size
+        // https://stackoverflow.com/a/22982334/893222
         window.pack();
 
         // make display visible
