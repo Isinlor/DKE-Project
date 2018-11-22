@@ -30,12 +30,11 @@ public class GraphScreen extends JPanel {
 
         GraphPanel graphPanel = new GraphPanel(graph);
 
-        GridBagConstraints layoutSettings;
-        Insets insets = new Insets(5, 5, 5, 5);
-
         // GridBagLayout elements settings (or GridBagConstraints):
         // http://voyager.deanza.edu/~hso/cis35a/lecture/java16/layout/set.html
         // http://voyager.deanza.edu/~hso/cis35a/lecture/java16/layout/work.html
+        GridBagConstraints layoutSettings;
+        Insets insets = new Insets(5, 5, 5, 5);
 
         layoutSettings = new GridBagConstraints();
         layoutSettings.gridx = 0;
