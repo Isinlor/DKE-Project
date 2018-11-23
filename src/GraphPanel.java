@@ -89,9 +89,17 @@ public class GraphPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
 
+        turnAntialiasingOn(g);
         drawVertices(g);
         drawEdges(g);
 
+    }
+
+    protected void turnAntialiasingOn(Graphics g) {
+        ((Graphics2D)g).setRenderingHint(
+            RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON
+        );
     }
 
     protected void drawVertices(Graphics g) {
