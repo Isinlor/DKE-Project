@@ -18,6 +18,12 @@ public class GraphPanel extends JPanel {
         this.graph = graph;
         initializeCoordinates();
 
+        setPreferredSize(new Dimension(
+            panelWidth, panelHeight
+        ));
+
+        setBorder(BorderFactory.createLineBorder(Color.black));
+
     }
 
     class VertexCoordinates {
@@ -83,17 +89,17 @@ public class GraphPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
 
-        drawFrame(g);
+        turnAntialiasingOn(g);
         drawVertices(g);
         drawEdges(g);
 
     }
 
-    protected void drawFrame(Graphics g) {
-        g.drawLine(0, 0, 0, panelHeight);
-        g.drawLine(0, 0, panelWidth, 0);
-        g.drawLine(0, panelWidth, panelWidth, panelHeight);
-        g.drawLine(panelHeight, 0, panelWidth, panelHeight);
+    protected void turnAntialiasingOn(Graphics g) {
+        ((Graphics2D)g).setRenderingHint(
+            RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON
+        );
     }
 
     protected void drawVertices(Graphics g) {
