@@ -6,8 +6,6 @@ public class GraphPanel extends JPanel {
 
     protected Graph graph;
 
-    protected VertexCoordinates[] coordinates;
-
     protected int panelWidth = 800;
     protected int panelHeight = 800;
 
@@ -26,31 +24,9 @@ public class GraphPanel extends JPanel {
 
     }
 
-    class VertexCoordinates {
-
-        public int x;
-        public int y;
-
-        public VertexCoordinates(int x, int y) {
-                this.x = x;
-                this.y = y;
-        }
-
-        public boolean hasOverlap(int x, int y, int vertexSize) {
-
-            boolean hasHorizontalOverlap = Math.abs(this.x-x) <= vertexSize;
-
-            boolean hasVerticalOverlap =  Math.abs(this.y-y) <= vertexSize;
-
-            return hasVerticalOverlap && hasHorizontalOverlap;
-
-        }
-
-    }
-
     private void initializeCoordinates() {
 
-        coordinates = new VertexCoordinates[graph.getNumberOfVertices() + 1];
+        Vertex[] vertices = new Vertex[graph.getNumberOfVertices() + 1];
 
         int coordinatesToSet = graph.getNumberOfVertices();
         while(coordinatesToSet > 0) {
@@ -67,7 +43,7 @@ public class GraphPanel extends JPanel {
 
             boolean hasOverlap = false;
             for(int i = 1; i < index; i++) {
-                if(coordinates[i].hasOverlap(x, y, vertexSize*3)) {
+                if(vertices[i].hasOverlap(x, y, vertexSize*3)) {
                     hasOverlap = true;
                     break;
                 }
@@ -77,10 +53,12 @@ public class GraphPanel extends JPanel {
                 continue;
             }
 
-            coordinates[index] = new VertexCoordinates(x, y);
+            vertices[index] = new Vertex(x, y, Color.black);
             coordinatesToSet--;
 
         }
+
+        graph.setVertices(vertices);
 
         optimizeStrategyA(100000);
         optimizeStrategyB(100000);
@@ -103,20 +81,22 @@ public class GraphPanel extends JPanel {
     }
 
     protected void drawVertices(Graphics g) {
-        for(VertexCoordinates coordinate: coordinates) {
-            if(!(coordinate instanceof VertexCoordinates)) { continue; }
-            g.fillOval(coordinate.x, coordinate.y, vertexSize, vertexSize);
+        for(Vertex vertex: graph.getVertices()) {
+            if(!(vertex instanceof Vertex)) { continue; }
+            g.setColor(vertex.color);
+            g.fillOval(vertex.x, vertex.y, vertexSize, vertexSize);
         }
     }
 
     protected void drawEdges(Graphics g) {
 
+        Vertex[] vertices = graph.getVertices();
         for(int i = 0; i < graph.getEdges().length; i++) {
 
             Edge edge = graph.getEdges()[i];
 
-            VertexCoordinates from = coordinates[edge.from];
-            VertexCoordinates to = coordinates[edge.to];
+            Vertex from = vertices[edge.from];
+            Vertex to = vertices[edge.to];
 
             g.drawLine(from.x+vertexSize/2, from.y+vertexSize/2, to.x+vertexSize/2, to.y+vertexSize/2);
 
@@ -184,11 +164,13 @@ public class GraphPanel extends JPanel {
 
     protected void swapCoordinates(int swapA, int swapB) {
 
-        VertexCoordinates a = coordinates[swapA];
-        VertexCoordinates b = coordinates[swapB];
+        Vertex[] vertices = graph.getVertices();
 
-        coordinates[swapA] = b;
-        coordinates[swapB] = a;
+        Vertex a = vertices[swapA];
+        Vertex b = vertices[swapB];
+
+        vertices[swapA] = b;
+        vertices[swapB] = a;
 
     }
 
@@ -201,6 +183,7 @@ public class GraphPanel extends JPanel {
      */
     protected int computeTotalDistance() {
         int distance = 0;
+        Vertex[] vertices = graph.getVertices();
         for(int j = 0; j < graph.getEdges().length; j++) {
 
             Edge edge = graph.getEdges()[j];
@@ -208,8 +191,8 @@ public class GraphPanel extends JPanel {
             int vertexFrom = edge.from;
             int vertexTo = edge.to;
 
-            VertexCoordinates from = coordinates[vertexFrom];
-            VertexCoordinates to = coordinates[vertexTo];
+            Vertex from = vertices[vertexFrom];
+            Vertex to = vertices[vertexTo];
 
             distance += Math.abs(from.x-to.x) + Math.abs(from.y-to.y);
 

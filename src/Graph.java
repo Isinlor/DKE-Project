@@ -9,6 +9,8 @@ public class Graph {
 
     private Edge[] edges;
 
+    protected Vertex[] vertices;
+
     /**
      * Other representation of edges in a graph.
      *
@@ -79,6 +81,14 @@ public class Graph {
      */
     public Edge[] getEdges() {
         return edges;
+    }
+
+    public Vertex[] getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(Vertex[] vertices) {
+        this.vertices = vertices;
     }
 
     /**
