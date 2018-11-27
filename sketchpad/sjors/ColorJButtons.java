@@ -8,13 +8,13 @@ public class ColorJButtons{
 
      public JPanel createContentPane (){
 
-        // Create a JPanel to put all the buttons on
+        // Create a JPanel to put all the buttons on.
         JPanel totalGUI = new JPanel();
 
         // Set layout manager to null so that the buttons can be manually placed
         totalGUI.setLayout(null);
         //Panels for all the colors
-        
+
         Color Red = new Color(230, 25, 75);
         Color Green = new Color(60, 180, 75);
         Color Yellow = new Color(255, 225, 25);
@@ -36,8 +36,8 @@ public class ColorJButtons{
         Color Navy = new Color(0, 0, 128);
         Color Grey = new Color(128, 128, 128);
         Color White = new Color(255, 255, 255);
-        
-        
+
+
         JButton redButton = new JButton();
         redButton.setBackground(Red);
         redButton.setLocation(10, 10);
@@ -46,7 +46,7 @@ public class ColorJButtons{
         totalGUI.add(redButton);
       //  redButton.addActionListener(red);
         redButton.setVisible(true);
-       
+
         JButton greenButton = new JButton();
         greenButton.setBackground(Green);
         greenButton.setLocation(55, 10);
@@ -128,7 +128,7 @@ public class ColorJButtons{
         LavenderButton.setSize(35, 35);
         LavenderButton.setToolTipText("Lavender");
         totalGUI.add(LavenderButton);
-        
+
         JButton BrownButton = new JButton();
         BrownButton.setBackground(Brown);
         BrownButton.setLocation(10, 190);
@@ -149,7 +149,7 @@ public class ColorJButtons{
         MaroonButton.setSize(35, 35);
         MaroonButton.setToolTipText("Maroon");
         totalGUI.add(MaroonButton);
-        
+
         JButton MintButton = new JButton();
         MintButton.setBackground(Mint);
         MintButton.setLocation(10, 235);
@@ -170,7 +170,7 @@ public class ColorJButtons{
         ApricotButton.setSize(35, 35);
         ApricotButton.setToolTipText("Apricot");
         totalGUI.add(ApricotButton);
-        
+
         JButton NavyButton = new JButton();
         NavyButton.setBackground(Navy);
         NavyButton.setLocation(10, 280);
@@ -191,14 +191,14 @@ public class ColorJButtons{
         WhiteButton.setSize(35, 35);
         WhiteButton.setToolTipText("White");
         totalGUI.add(WhiteButton);
-        
-        
-        
-  
+
+
+
+
 
         JButton AddColor = new JButton(new ImageIcon("ADD.png"));
-        
-   
+
+
        // AddColor.setBackground(Color.white);
         AddColor.setLocation(55, 10);
         AddColor.setSize(35, 35);
@@ -207,7 +207,7 @@ public class ColorJButtons{
         class ColorJButtonsListener implements ActionListener {
         	int count = 0;
         	public void actionPerformed(ActionEvent event){
-        		
+
         	if(event.getSource() instanceof JButton) {
         			if (count == 0) {
         				greenButton.setVisible(true);
@@ -224,13 +224,13 @@ public class ColorJButtons{
         			if (count == 3) {
         				OrangeButton.setVisible(true);
         				AddColor.setLocation(100, 55);
-        			} 
+        			}
         			setSelectedColor(((JButton) event.getSource()).getBackground());
         		//	WhiteButton.setBackground(getSelectedColor());
         			count++;
-        			
+
         		}
-        		
+
         	}
 
         	public Color getSelectedColor() {
@@ -242,9 +242,9 @@ public class ColorJButtons{
         	}
 
         	private Color SelectedColor;
-        		
+
         	}
-      
+
         ActionListener addcolor = new ColorJButtonsListener();
         AddColor.addActionListener(addcolor);
         ActionListener greybutton  = new ColorJButtonsListener();
@@ -253,12 +253,12 @@ public class ColorJButtons{
         BlueButton.addActionListener(bluebutton);
         ActionListener orangebutton  = new ColorJButtonsListener();
         OrangeButton.addActionListener(orangebutton);
-       
+
         // Returns the final JPanel
         totalGUI.setOpaque(true);
         return totalGUI;
-        
-        
+
+
     }
 
     private static void createAndShowGUI() {
