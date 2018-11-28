@@ -26,11 +26,11 @@ public class Graph {
         // initialize adjacency matrix
         adjacencyMatrix = new int[numberOfVertices+1][numberOfVertices+1];
 
-        for(int i=0; i < edges.length; i++) {
+        for (Edge edge: edges) {
 
             // fill adjacency matrix in standard format
-            adjacencyMatrix[edges[i].from][edges[i].to] = 1;
-            adjacencyMatrix[edges[i].to][edges[i].from] = 1;
+            adjacencyMatrix[edge.from][edge.to] = 1;
+            adjacencyMatrix[edge.to][edge.from] = 1;
 
         }
 
@@ -49,7 +49,7 @@ public class Graph {
 
                 if(adjacencyMatrix[i][j] == 1 || adjacencyMatrix[j][i] == 1) {
 
-                    // standarize adjacency matrix
+                    // standardize adjacency matrix
                     adjacencyMatrix[i][j] = 1;
                     adjacencyMatrix[j][i] = 1;
 

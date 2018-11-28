@@ -24,12 +24,12 @@ public class Run {
             WINDOW_WIDTH, WINDOW_HEIGHT
         ));
 
-        // Graph graph = (new Random()).generate(4, 3);
-        Graph graph = (new FileLoader()).load("../graphs/custom/graph.txt");
+        // Graph graph = Random.generate(4, 3);
+        Graph graph = FileLoader.load("../graphs/custom/graph.txt");
 
         contentPane.add(new GraphScreen(graph));
 
-        // Sets windows size so that everything inside have at least preffered size
+        // Sets windows size so that everything inside have at least preferred size
         // https://stackoverflow.com/a/22982334/893222
         window.pack();
 

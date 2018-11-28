@@ -82,6 +82,7 @@ public class GraphPanel extends JPanel {
 
     protected void drawVertices(Graphics g) {
         for(Vertex vertex: graph.getVertices()) {
+            //noinspection ConstantConditions
             if(!(vertex instanceof Vertex)) { continue; }
             g.setColor(vertex.color);
             g.fillOval(vertex.x, vertex.y, vertexSize, vertexSize);
