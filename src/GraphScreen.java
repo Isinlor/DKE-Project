@@ -18,14 +18,7 @@ public class GraphScreen extends JPanel {
         JButton restartButton = new JButton("Restart game");
         GameTimer timer = new GameTimer(gameState);
 
-        JPanel colorsSelectionPanel = new JPanel();
-        colorsSelectionPanel.setLayout(
-            new BoxLayout(colorsSelectionPanel, BoxLayout.PAGE_AXIS)
-        );
-        colorsSelectionPanel.add(new JLabel("Colors selection:"));
-        colorsSelectionPanel.add(new JButton("Color 1"));
-        colorsSelectionPanel.add(new JButton("Color 2"));
-        colorsSelectionPanel.add(new JButton("Color 3"));
+        ColorSelectionPanel colorsSelectionPanel = new ColorSelectionPanel(gameState);
 
         JLabel colorsUsed = new JLabel("Colors used: x");
         JButton hintButton = new JButton("Hint");
