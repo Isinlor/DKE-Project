@@ -30,7 +30,7 @@ public class GraphScreen extends JPanel {
         JLabel colorsUsed = new JLabel("Colors used: x");
         JButton hintButton = new JButton("Hint");
 
-        GraphPanel graphPanel = new GraphPanel(graph);
+        GraphPanel graphPanel = new GraphPanel(gameState);
 
         // GridBagLayout elements settings (or GridBagConstraints):
         // http://voyager.deanza.edu/~hso/cis35a/lecture/java16/layout/set.html

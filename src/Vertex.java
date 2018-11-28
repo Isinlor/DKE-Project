@@ -4,12 +4,23 @@ class Vertex {
 
     public int x;
     public int y;
-    public Color color;
+    private Color color;
 
-    public Vertex(int x, int y, Color color) {
+    public Vertex(int x, int y) {
             this.x = x;
             this.y = y;
-            this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public boolean hasColor() {
+        return color != null;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public boolean hasOverlap(int x, int y, int vertexSize) {

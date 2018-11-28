@@ -11,9 +11,11 @@ public class GraphPanel extends JPanel {
 
     protected int vertexSize = 25;
 
-    public GraphPanel(Graph graph) {
+    protected Color defaultColor = Color.black;
 
-        this.graph = graph;
+    public GraphPanel(GameState gameState) {
+
+        this.graph = gameState.getGraph();
         initializeCoordinates();
 
         setPreferredSize(new Dimension(
@@ -21,6 +23,8 @@ public class GraphPanel extends JPanel {
         ));
 
         setBorder(BorderFactory.createLineBorder(Color.black));
+
+        addMouseListener(new VertexClickListener(gameState, this, vertexSize));
 
     }
 
@@ -53,7 +57,7 @@ public class GraphPanel extends JPanel {
                 continue;
             }
 
-            vertices[index] = new Vertex(x, y, Color.black);
+            vertices[index] = new Vertex(x, y);
             coordinatesToSet--;
 
         }
@@ -67,9 +71,13 @@ public class GraphPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
 
+        // See: https://stackoverflow.com/a/13281121/893222
+        // without it panel get visual artifacts after repaint
+        super.paintComponent(g);
+
         turnAntialiasingOn(g);
-        drawVertices(g);
         drawEdges(g);
+        drawVertices(g);
 
     }
 
@@ -84,17 +92,26 @@ public class GraphPanel extends JPanel {
         for(Vertex vertex: graph.getVertices()) {
             //noinspection ConstantConditions
             if(!(vertex instanceof Vertex)) { continue; }
-            g.setColor(vertex.color);
-            g.fillOval(vertex.x, vertex.y, vertexSize, vertexSize);
+            if(vertex.hasColor()) {
+                // colored vertex
+                g.setColor(vertex.getColor());
+                g.fillOval(vertex.x, vertex.y, vertexSize, vertexSize);
+            } else {
+                // white space vertex
+                g.setColor(Color.white);
+                g.fillOval(vertex.x, vertex.y, vertexSize, vertexSize);
+                g.setColor(defaultColor);
+                g.drawOval(vertex.x, vertex.y, vertexSize, vertexSize);
+            }
         }
     }
 
     protected void drawEdges(Graphics g) {
 
-        Vertex[] vertices = graph.getVertices();
-        for(int i = 0; i < graph.getEdges().length; i++) {
+        g.setColor(defaultColor);
 
-            Edge edge = graph.getEdges()[i];
+        Vertex[] vertices = graph.getVertices();
+        for(Edge edge: graph.getEdges()) {
 
             Vertex from = vertices[edge.from];
             Vertex to = vertices[edge.to];

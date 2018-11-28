@@ -9,7 +9,7 @@ public class GameState {
 
     private Graph graph;
     private GameMode mode;
-    private Color selectedColor = Color.WHITE;
+    private Color selectedColor = Color.BLACK;
     private long startedAt;
 
     public GameState(Graph graph, GameMode mode) {
