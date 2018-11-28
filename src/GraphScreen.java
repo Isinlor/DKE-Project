@@ -4,7 +4,9 @@ import javax.swing.*;
 
 public class GraphScreen extends JPanel {
 
-    public GraphScreen(Graph graph) {
+    public GraphScreen(GameState gameState) {
+
+        Graph graph = gameState.getGraph();
 
         // A Visual Guide to Layout Managers:
         // https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
@@ -14,7 +16,7 @@ public class GraphScreen extends JPanel {
         setLayout(new GridBagLayout());
 
         JButton restartButton = new JButton("Restart game");
-        JLabel timerPlaceholder = new JLabel("Timer Placeholder");
+        GameTimer timer = new GameTimer(gameState);
 
         JPanel colorsSelectionPanel = new JPanel();
         colorsSelectionPanel.setLayout(
@@ -47,7 +49,7 @@ public class GraphScreen extends JPanel {
         layoutSettings.gridy = 0;
         layoutSettings.anchor = GridBagConstraints.EAST;
         layoutSettings.insets = insets;
-        add(timerPlaceholder, layoutSettings);
+        add(timer, layoutSettings);
 
         layoutSettings = new GridBagConstraints();
         layoutSettings.gridx = 0;
