@@ -7,37 +7,37 @@ public class Run {
     final static public int WINDOW_WIDTH = 1500;
     final static public int WINDOW_HEIGHT = 1000;
 
+    static JFrame window;
+    static Container contentPane;
+
     public static void main(String[] args) {
 
         // Frame and content pane explanation:
         // https://docs.oracle.com/javase/tutorial/uiswing/components/toplevel.html
 
-        JFrame window = new JFrame();
-        Container contentPane = window.getContentPane();
+        window = new JFrame();
+        contentPane = window.getContentPane();
 
         // exit after clicking close button
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // define size of content pane; allows to avoid issues with accounting
-        // for title bar (the thing with close button)
-        contentPane.setPreferredSize(new Dimension(
-            WINDOW_WIDTH, WINDOW_HEIGHT
-        ));
-
-        Graph graph = Random.generate(13, 20);
-        // Graph graph = FileLoader.load("../graphs/custom/graph.txt");
-
-        GameState gameState = new GameState(graph, GameMode.BITTER_END);
-
-        contentPane.add(new GraphScreen(gameState));
-
-        // Sets windows size so that everything inside have at least preferred size
-        // https://stackoverflow.com/a/22982334/893222
-        window.pack();
+        displaySpecificationScreen();
 
         // make display visible
         window.setVisible(true);
 
+    }
+
+    public static void displaySpecificationScreen() {
+        contentPane.removeAll();
+        contentPane.add(new SpecificationScreen());
+        window.pack();
+    }
+
+    public static void displayGraphScreen(GameState state) {
+        contentPane.removeAll();
+        contentPane.add(new GraphScreen(state));
+        window.pack();
     }
 
 }
