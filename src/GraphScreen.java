@@ -16,6 +16,10 @@ public class GraphScreen extends JPanel {
         setLayout(new GridBagLayout());
 
         JButton restartButton = new JButton("Restart game");
+        restartButton.addActionListener(e -> {
+            Run.displaySpecificationScreen();
+        });
+
         GameTimer timer = new GameTimer(gameState);
 
         ColorSelectionPanel colorsSelectionPanel = new ColorSelectionPanel(gameState);
