@@ -22,8 +22,6 @@ public class SpecificationScreen extends JPanel {
 
     String pathToFileWithGraph;
 
-    JPanel graphSettings;
-
     int verticalComponentsCounter = 0;
 
     public SpecificationScreen() {
