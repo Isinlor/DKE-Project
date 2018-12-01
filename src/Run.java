@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 
 public class Run {
 
@@ -38,6 +39,10 @@ public class Run {
         contentPane.removeAll();
         contentPane.add(new GraphScreen(state));
         window.pack();
+    }
+
+    public static void setLookAndFeel() throws Exception {
+        UIManager.setLookAndFeel(MetalLookAndFeel.class.getCanonicalName());
     }
 
 }
