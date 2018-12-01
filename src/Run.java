@@ -11,7 +11,9 @@ public class Run {
     static JFrame window;
     static Container contentPane;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        setLookAndFeel();
 
         // Frame and content pane explanation:
         // https://docs.oracle.com/javase/tutorial/uiswing/components/toplevel.html
