@@ -6,8 +6,8 @@ public class GraphPanel extends JPanel {
 
     protected Graph graph;
 
-    protected int panelWidth = 800;
-    protected int panelHeight = 800;
+    protected int panelWidth = 600;
+    protected int panelHeight = 600;
 
     protected int vertexSize = 25;
 
