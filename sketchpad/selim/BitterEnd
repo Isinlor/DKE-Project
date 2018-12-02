@@ -1,0 +1,19 @@
+public class BitterEnd {
+
+    // assume: n = chromatic number
+        // should we propose n different colors or we still propose more colors?
+        // I think we could propose n colors and no more since the computer doesn't allow the player to finish the game until the minimum number of colors has been reached
+
+
+
+    public int chromaticNumber{ // compute the chromatic number
+        .......
+
+    }
+
+
+    if(hasColor && notAdjacent && (numberColorUsed == chromaticNumber){  // every vertix has a color && not the same color for adjacent vertices && used the minimum number
+        //show a message to tell the player that he won + the time he took to finish the game + number of colors used + button to go back to the menu
+    }
+
+}

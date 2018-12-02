@@ -1,0 +1,42 @@
+public class RandomOrder {
+
+    // generate a random vertices order:
+            // get the number of vertices of the graph
+
+    // give a number to each vertix + draw this number on the vertix
+
+    // create a counter of how many vertix are colored
+
+    public boolean hasColor(vertixClicked)
+    {
+
+        if () {  // the vertex has already a color
+            // -> return true
+        }
+
+        // else, the vertex has not a color yet -> return false
+    }
+
+
+    public boolean goodOrder(vertixClicked) {
+
+        if () { // (number of colored vertices)  !=  (number of the vertix that he wants to color - 1)
+            // return false
+        }
+
+        // else, the selectioned vertix is the good one (in term of order) -> return true
+    }
+
+
+
+    if(hasColor || !goodOrder){
+        // don't allow the player to color the vertix
+    }
+
+
+
+    if(){ // every vertix has a color && not the same color for adjacents vertices
+        // show a message to tell the player that he won + the time he took to finish the game + number of colors used + number of minimum colors that could have been used + button to go back to the menu
+    }
+
+}
