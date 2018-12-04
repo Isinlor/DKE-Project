@@ -1,3 +1,6 @@
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Graph {
 
     /**
@@ -96,6 +99,51 @@ public class Graph {
      */
     public boolean isAdjacent(int vertexA, int vertexB) {
         return adjacencyMatrix[vertexA][vertexB] == 1;
+    }
+
+    public boolean isFullyColored() {
+        for(Vertex vertex: vertices) {
+            if(vertex == null) { continue; }
+            if(!vertex.hasColor()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int getColorCount() {
+
+        int count = 0;
+        ArrayList<Color> colors = new ArrayList<Color>();
+        for(Vertex vertex: vertices) {
+            if(vertex == null) { continue; }
+            if(vertex.hasColor() && !colors.contains(vertex.getColor())) {
+                count++;
+                colors.add(vertex.getColor());
+            }
+        }
+
+        return count;
+
+    }
+
+    public int getChromaticNumber() {
+        return 2;
+    }
+
+    public boolean isOptimallyColored() {
+        if(isFullyColored() && getColorCount() <= getChromaticNumber()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isGraphColoredCorrectly() {
+        if(!isFullyColored()) {
+            return false;
+        }
+        // check edges
+        return false;
     }
 
 }

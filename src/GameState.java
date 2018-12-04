@@ -42,4 +42,14 @@ public class GameState {
         return System.currentTimeMillis() - getStartedAt();
     }
 
+    public String getSinceStartFormatted() {
+        long timeInSeconds = getSinceStart() / 1000;
+        return String.format(
+                "%d:%02d:%02d", // hours:minutes:seconds
+                timeInSeconds / (60 * 60), // hours
+                (timeInSeconds / 60) % 60, // minutes
+                timeInSeconds % 60         // seconds
+        );
+    }
+
 }
