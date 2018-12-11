@@ -85,7 +85,7 @@ public class ColorSelectionPanel extends JPanel {
 
             ColorButton button = new ColorButton(
                 new Color(Color.HSBtoRGB(hue, saturation, brightness)),
-                buttonSize
+                buttonSize - Math.min(20, numberOfVertices / 5) // allows to handle bigger graphs
             );
 
             add(button, layoutSettings);

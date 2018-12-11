@@ -16,6 +16,9 @@ public class GraphPanel extends JPanel {
     public GraphPanel(GameState gameState) {
 
         this.graph = gameState.getGraph();
+
+        vertexSize = vertexSize - Math.min(graph.getNumberOfVertices() / 5, 10); // allows to handle bigger graphs
+
         initializeCoordinates();
 
         setPreferredSize(new Dimension(
