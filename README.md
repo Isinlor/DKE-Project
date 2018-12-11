@@ -1,6 +1,6 @@
 # DKE-Project Group 23
 
-![Gantt CHart](https://raw.githubusercontent.com/dke-group-23/DKE-Project/master/DKE%20Project%20-%20Gantt%20Chart.png "Gantt Chart")
+Time tracking: https://docs.google.com/spreadsheets/d/1np752UbjdXQngAB3N8CpQkXrkS8FtnJw7NpbkqnJLCI/edit#gid=0
 
 The book ["A Guide to Graph Colouring Algorithms and Applications"](http://opencarts.org/sachlaptrinh/pdf/16446.pdf) is good source.
 
