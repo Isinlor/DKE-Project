@@ -48,7 +48,7 @@ public class ColorSelectionPanel extends JPanel {
         this.gameState = gameState;
 
         int numberOfVertices = gameState.getGraph().getNumberOfVertices();
-        int columns = Math.min((numberOfVertices / 10) + 1, 3);
+        int columns = numberOfVertices > 50 ? numberOfVertices / 15 : Math.min((numberOfVertices / 10) + 1, 3);
         int rows = numberOfVertices / columns;
 
         // How to Use GridBagLayout:
