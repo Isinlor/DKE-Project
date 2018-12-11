@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  * This screen allows to specify details of a game.
@@ -142,9 +145,9 @@ public class SpecificationScreen extends JPanel {
         JButton selectGraphButton = new JButton("Select graph from a file");
         selectGraphButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JFileChooser fileChooser = new JFileChooser();
+      //  JFileChooser fileChooser = new JFileChooser();
 
-        JLabel selectedFileLabel = new JLabel();
+      /*   JLabel selectedFileLabel = new JLabel();
         selectedFileLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         selectGraphButton.addActionListener(e -> {
@@ -154,7 +157,29 @@ public class SpecificationScreen extends JPanel {
                 pathToFileWithGraph = selectedFile.getAbsolutePath();
                 selectedFileLabel.setText(selectedFile.getName());
             }
+        }); */
+
+
+
+        // added a filter to the file chooser to allow the user to only open "txt" files
+        JLabel selectedFileLabel = new JLabel();
+        selectedFileLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        selectGraphButton.addActionListener(e ->{
+            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            fileChooser.setDialogTitle("Select a graph");
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("text", "txt");
+            fileChooser.addChoosableFileFilter(filter);
+
+            int returnValue = fileChooser.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+              File selectedFile = fileChooser.getSelectedFile();
+              pathToFileWithGraph = selectedFile.getAbsolutePath();
+              selectedFileLabel.setText(selectedFile.getName());
+            }
         });
+
 
         fileSelectionPanel.add(selectGraphButton);
         fileSelectionPanel.add(selectedFileLabel);
