@@ -33,7 +33,7 @@ public class GraphScreen extends JPanel {
             }
         });
 
-        JButton validateButton = new JButton("Start validating");
+        JButton validateButton = new JButton("Start validating edges");
         validateButton.addActionListener(e -> {
             graphPanel.showEdgesValidation();
             graphPanel.repaint();
@@ -48,6 +48,7 @@ public class GraphScreen extends JPanel {
         });
 
         JPanel hintButtons = new JPanel();
+        hintButtons.add(new JLabel("Hints: "));
         hintButtons.add(showChromaticNumberButton);
         hintButtons.add(validateButton);
 
