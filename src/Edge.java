@@ -1,5 +1,5 @@
 /**
- * Represents an edge from vertex "u" to vertex "v"
+ * Represents an edge from vertex "from" to vertex "to"
  *
  * Remember that vertices start from 1!
  */

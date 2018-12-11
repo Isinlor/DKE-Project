@@ -69,7 +69,7 @@ public class Graph {
         if(numberOfEdges != counter) {
             throw new IllegalArgumentException(
                 "Expected number of edges " + numberOfEdges + ", " +
-                "from adjacency matrix retrived " + counter + "!"
+                "from adjacency matrix retrieved " + counter + "!"
             );
         }
 
@@ -77,6 +77,10 @@ public class Graph {
 
     public int getNumberOfVertices() {
         return numberOfVertices;
+    }
+
+    public int getNumberOfEdges() {
+        return edges.length;
     }
 
     /**
@@ -128,22 +132,23 @@ public class Graph {
     }
 
     public int getChromaticNumber() {
-        return 2;
+        return Backtracking.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
     }
 
     public boolean isOptimallyColored() {
-        if(isFullyColored() && getColorCount() <= getChromaticNumber()) {
-            return true;
-        }
-        return false;
+        return isGraphColoredCorrectly() && getColorCount() <= getChromaticNumber();
     }
 
     public boolean isGraphColoredCorrectly() {
         if(!isFullyColored()) {
             return false;
         }
-        // check edges
-        return false;
+        for (Edge edge: getEdges()) {
+            if(vertices[edge.from].getColor() == vertices[edge.to].getColor()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
