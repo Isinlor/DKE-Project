@@ -145,28 +145,12 @@ public class SpecificationScreen extends JPanel {
         JButton selectGraphButton = new JButton("Select graph from a file");
         selectGraphButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-      //  JFileChooser fileChooser = new JFileChooser();
-
-      /*   JLabel selectedFileLabel = new JLabel();
-        selectedFileLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        selectGraphButton.addActionListener(e -> {
-            int returnValue = fileChooser.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                pathToFileWithGraph = selectedFile.getAbsolutePath();
-                selectedFileLabel.setText(selectedFile.getName());
-            }
-        }); */
-
-
-
         // added a filter to the file chooser to allow the user to only open "txt" files
         JLabel selectedFileLabel = new JLabel();
         selectedFileLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        selectGraphButton.addActionListener(e ->{
-            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        selectGraphButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser("./"); // allows to find graphs easier
             fileChooser.setDialogTitle("Select a graph");
             fileChooser.setAcceptAllFileFilterUsed(false);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("text", "txt");
