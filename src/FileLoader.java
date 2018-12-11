@@ -9,18 +9,19 @@ public class FileLoader {
 
     public static Graph load(String pathToFileWithGraph) {
 
-        boolean seen[] = null;
+        try {
 
-        //! n is the number of vertices in the graph
-        int n = -1;
+            boolean seen[] = null;
 
-        //! m is the number of edges in the graph
-        int m = -1;
+            //! n is the number of vertices in the graph
+            int n = -1;
 
-        //! e will contain the edges of the graph
-        Edge e[] = null;
+            //! m is the number of edges in the graph
+            int m = -1;
 
-        try 	{
+            //! e will contain the edges of the graph
+            Edge e[] = null;
+
 
             FileReader fr = new FileReader(pathToFileWithGraph);
             BufferedReader br = new BufferedReader(fr);
@@ -32,67 +33,71 @@ public class FileLoader {
 
             //! -----------------------------------------
             while ((record = br.readLine()) != null) {
-                if( record.startsWith("//") ) continue;
+                if (record.startsWith("//")) continue;
                 break; // Saw a line that did not start with a comment -- time to start reading the data in!
             }
 
-            if( record.startsWith("VERTICES = ") ) {
-                n = Integer.parseInt( record.substring(11) );
-                if(DEBUG) System.out.println(COMMENT + " Number of vertices = "+n);
+            if (record.startsWith("VERTICES = ")) {
+                n = Integer.parseInt(record.substring(11));
+                if (DEBUG) System.out.println(COMMENT + " Number of vertices = " + n);
             }
 
-            seen = new boolean[n+1];
+            seen = new boolean[n + 1];
 
             record = br.readLine();
 
-            if( record.startsWith("EDGES = ") ) {
-                m = Integer.parseInt( record.substring(8) );
-                if(DEBUG) System.out.println(COMMENT + " Expected number of edges = "+m);
+            if (record.startsWith("EDGES = ")) {
+                m = Integer.parseInt(record.substring(8));
+                if (DEBUG) System.out.println(COMMENT + " Expected number of edges = " + m);
             }
 
             e = new Edge[m];
 
-            for( int d = 0; d < m; d++) {
+            for (int d = 0; d < m; d++) {
 
-                if(DEBUG) System.out.println(COMMENT + " Reading edge "+(d+1));
+                if (DEBUG) System.out.println(COMMENT + " Reading edge " + (d + 1));
 
                 record = br.readLine();
                 String data[] = record.split(" ");
 
-                if(data.length != 2) {
-                    System.out.println("Error! Malformed edge line: "+record);
+                if (data.length != 2) {
+                    System.out.println("Error! Malformed edge line: " + record);
                     System.exit(0);
                 }
 
                 e[d] = new Edge(
-                    Integer.parseInt(data[0]),
-                    Integer.parseInt(data[1])
+                        Integer.parseInt(data[0]),
+                        Integer.parseInt(data[1])
                 );
-                seen[ e[d].from ] = true;
-                seen[ e[d].to ] = true;
+                seen[e[d].from] = true;
+                seen[e[d].to] = true;
 
-                if(DEBUG) System.out.println(COMMENT + " Edge: "+ e[d].from +" "+e[d].to);
+                if (DEBUG) System.out.println(COMMENT + " Edge: " + e[d].from + " " + e[d].to);
 
             }
 
             String surplus = br.readLine();
-            if( surplus != null ) {
-                if( surplus.length() >= 2 ) if(DEBUG) System.out.println(COMMENT + " Warning: there appeared to be data in your file after the last edge: '"+surplus+"'");
+            if (surplus != null) {
+                if (surplus.length() >= 2) if (DEBUG)
+                    System.out.println(COMMENT + " Warning: there appeared to be data in your file after the last edge: '" + surplus + "'");
             }
 
-        } catch (IOException ex) {
-            // catch possible io errors from readLine()
-            System.out.println("Error! Problem reading file "+pathToFileWithGraph);
-            System.exit(0);
-        }
-
-        for( int x=1; x<=n; x++ ) {
-            if( seen[x] == false ) {
-                if(DEBUG) System.out.println(COMMENT + " Warning: vertex "+x+" didn't appear in any edge : it will be considered a disconnected vertex on its own.");
+            for (int x = 1; x <= n; x++) {
+                if (seen[x] == false) {
+                    if (DEBUG)
+                        System.out.println(COMMENT + " Warning: vertex " + x + " didn't appear in any edge : it will be considered a disconnected vertex on its own.");
+                }
             }
-        }
 
-        return new Graph(e, n);
+            return new Graph(e, n);
+
+        } catch (WrongGraphSpecificationException ex) {
+            throw new WrongGraphSpecificationException(
+                    "Problem reading file " + pathToFileWithGraph + "\n" + ex.getMessage(), ex
+            );
+        } catch (Exception ex) {
+            throw new WrongGraphSpecificationException("Problem reading file " + pathToFileWithGraph, ex);
+        }
 
     }
 

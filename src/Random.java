@@ -5,7 +5,7 @@ public class Random {
         // number of edges in a fully connected graph
         int maxEdges = (vertices * (vertices - 1)) / 2;
         if(edges > maxEdges) {
-            throw new IllegalArgumentException(""
+            throw new WrongGraphSpecificationException(""
                 + "Graph having " + vertices + " vertices "
                 + "can have maximally " + maxEdges + " edges!\n"
                 + "While you requested " + edges + " edges!"
@@ -13,11 +13,11 @@ public class Random {
         }
 
         if(vertices < 1) {
-            throw new IllegalArgumentException("Graph must have at least one vertice!");
+            throw new WrongGraphSpecificationException("Graph must have at least one vertice!");
         }
 
         if(edges < 0) {
-            throw new IllegalArgumentException("Number of edges must be a positive number!");
+            throw new WrongGraphSpecificationException("Number of edges must be a positive number!");
         }
 
         int[][] adjacencyMatrix = new int[vertices + 1][vertices + 1];

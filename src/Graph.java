@@ -67,7 +67,7 @@ public class Graph {
         }
 
         if(numberOfEdges != counter) {
-            throw new IllegalArgumentException(
+            throw new WrongGraphSpecificationException(
                 "Expected number of edges " + numberOfEdges + ", " +
                 "from adjacency matrix retrieved " + counter + "!"
             );

@@ -181,14 +181,24 @@ public class SpecificationScreen extends JPanel {
         playButton.setSize(100,50);
         playButton.addActionListener(e -> {
 
-            Graph graph;
-            if(graphMethod == GraphMethod.FILE) {
-                graph = FileLoader.load(pathToFileWithGraph);
-            } else {
-                graph = Random.generate(selectedNumberOfVertices, selectedNumberOfEdges);
-            }
+            try {
 
-            Run.displayGraphScreen(new GameState(graph, selectedGameMode));
+                Graph graph;
+                if (graphMethod == GraphMethod.FILE) {
+                    graph = FileLoader.load(pathToFileWithGraph);
+                } else {
+                    graph = Random.generate(selectedNumberOfVertices, selectedNumberOfEdges);
+                }
+
+                Run.displayGraphScreen(new GameState(graph, selectedGameMode));
+                
+            } catch (WrongGraphSpecificationException exception) {
+                JOptionPane.showMessageDialog(
+                        Run.window,
+                        exception.getMessage()
+                );
+                Run.displaySpecificationScreen();
+            }
 
         });
 
