@@ -23,11 +23,24 @@ public class VertexClickListener extends MouseAdapter {
                 vertex.setColor(gameState.getSelectedColor());
                 graphPanel.repaint();
 
-                if(gameState.getMode() == GameMode.BITTER_END && gameState.getGraph().isOptimallyColored()) {
+                Graph graph = gameState.getGraph();
+                if(gameState.getMode() == GameMode.BITTER_END && graph.isOptimallyColored()) {
                     GameTimer.timer.stop();
                     JOptionPane.showMessageDialog(
                             Run.window,
-                            "Hello, you are the winner! You took: " + gameState.getSinceStartFormatted()
+                            "You are the winner! You took: " + gameState.getSinceStartFormatted()
+                    );
+                    Run.displaySpecificationScreen();
+                }
+
+                if(gameState.getMode() == GameMode.UPPER_BOUND && graph.isGraphColoredCorrectly()) {
+                    GameTimer.timer.stop();
+                    JOptionPane.showMessageDialog(
+                            Run.window,
+                            "You are the winner!\n" +
+                                    "You took: " + gameState.getSinceStartFormatted() + "\n" +
+                                    "You have used " + graph.getColorCount() + " colors!\n" +
+                                    "While the graph can be colored with " + graph.getChromaticNumber() + "!"
                     );
                     Run.displaySpecificationScreen();
                 }
