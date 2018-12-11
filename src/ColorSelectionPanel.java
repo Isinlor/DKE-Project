@@ -10,6 +10,7 @@ public class ColorSelectionPanel extends JPanel {
     private int buttonSize = 35;
 
     private ArrayList<ColorButton> buttons = new ArrayList<ColorButton>();
+    private ArrayList<Color> colors = new ArrayList<Color>();
 
     class ColorButton extends JButton {
 
@@ -83,10 +84,14 @@ public class ColorSelectionPanel extends JPanel {
             // increase color space by incorporating different brightness
             float brightness = 1.0f - 0.6f * (float) (column) / (float) (columns);
 
+            Color color = new Color(Color.HSBtoRGB(hue, saturation, brightness));
+
             ColorButton button = new ColorButton(
-                new Color(Color.HSBtoRGB(hue, saturation, brightness)),
+                color,
                 buttonSize - Math.min(20, numberOfVertices / 5) // allows to handle bigger graphs
             );
+
+            colors.add(color);
 
             add(button, layoutSettings);
             buttons.add(button);
@@ -97,4 +102,9 @@ public class ColorSelectionPanel extends JPanel {
         buttons.get(0).press();
 
     }
+
+    public ArrayList<Color> getColors() {
+        return colors;
+    }
+
 }
