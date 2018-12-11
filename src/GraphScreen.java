@@ -24,10 +24,15 @@ public class GraphScreen extends JPanel {
 
         ColorSelectionPanel colorsSelectionPanel = new ColorSelectionPanel(gameState);
 
-        JLabel colorsUsed = new JLabel("Colors used: x");
+        JLabel colorsUsed = new JLabel("Colors used: 0");
         JButton hintButton = new JButton("Hint");
 
         GraphPanel graphPanel = new GraphPanel(gameState);
+        graphPanel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                colorsUsed.setText("Colors used: " + graph.getColorCount());
+            }
+        });
 
         // GridBagLayout elements settings (or GridBagConstraints):
         // http://voyager.deanza.edu/~hso/cis35a/lecture/java16/layout/set.html
