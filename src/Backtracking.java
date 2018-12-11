@@ -260,17 +260,20 @@ public class Backtracking {
 
                 while (i <= numberOfVertices) {
 
-                    boolean colored =executeBacktracking(i);
+                    boolean colored = executeBacktracking(i);
 
                     if(DEBUG) {
                         if (colored) {
                             System.out.println("Solution");
                             for (Node n : nodes)
                                 System.out.println("Node " + n.getLabel() + " Color " + colors[n.getLabel()]);
-                            break;
                         } else {
                             System.out.println("No solution for " + i);
                         }
+                    }
+
+                    if(colored) {
+                        break;
                     }
 
                     i++;
