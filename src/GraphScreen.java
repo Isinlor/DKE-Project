@@ -25,7 +25,6 @@ public class GraphScreen extends JPanel {
         ColorSelectionPanel colorsSelectionPanel = new ColorSelectionPanel(gameState);
 
         JLabel colorsUsed = new JLabel("Colors used: 0");
-        JButton hintButton = new JButton("Hint");
 
         GraphPanel graphPanel = new GraphPanel(gameState);
         graphPanel.addMouseListener(new MouseAdapter() {
@@ -33,6 +32,24 @@ public class GraphScreen extends JPanel {
                 colorsUsed.setText("Colors used: " + graph.getColorCount());
             }
         });
+
+        JButton validateButton = new JButton("Start validating");
+        validateButton.addActionListener(e -> {
+            graphPanel.showEdgesValidation();
+            graphPanel.repaint();
+        });
+
+        JButton showChromaticNumberButton = new JButton("Show chromatic number");
+        showChromaticNumberButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(
+                Run.window,
+                "The graph can be colored with " + graph.getChromaticNumber() + " colors."
+            );
+        });
+
+        JPanel hintButtons = new JPanel();
+        hintButtons.add(showChromaticNumberButton);
+        hintButtons.add(validateButton);
 
         // GridBagLayout elements settings (or GridBagConstraints):
         // http://voyager.deanza.edu/~hso/cis35a/lecture/java16/layout/set.html
@@ -70,7 +87,7 @@ public class GraphScreen extends JPanel {
         layoutSettings.gridy = 2;
         layoutSettings.anchor = GridBagConstraints.EAST;
         layoutSettings.insets = insets;
-        add(hintButton, layoutSettings);
+        add(hintButtons, layoutSettings);
 
         layoutSettings = new GridBagConstraints();
         layoutSettings.gridx = 1;

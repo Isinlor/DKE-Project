@@ -140,15 +140,24 @@ public class Graph {
     }
 
     public boolean isGraphColoredCorrectly() {
-        if(!isFullyColored()) {
-            return false;
-        }
+        return isFullyColored() && validateEdges();
+    }
+
+    public boolean validateEdges() {
+        boolean valid = true;
         for (Edge edge: getEdges()) {
-            if(vertices[edge.from].getColor() == vertices[edge.to].getColor()) {
-                return false;
-            }
+
+            Vertex fromVertex = vertices[edge.from];
+            Vertex toVertex = vertices[edge.to];
+
+            boolean bothVerticesColored = fromVertex.hasColor() && toVertex.hasColor();
+
+            // validity is used for coloring and edge with either of vertices not colored is valid
+            edge.valid = !bothVerticesColored || fromVertex.getColor() != toVertex.getColor();
+            valid = valid && edge.valid;
+
         }
-        return true;
+        return valid;
     }
 
 }

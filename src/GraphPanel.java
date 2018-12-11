@@ -13,6 +13,8 @@ public class GraphPanel extends JPanel {
 
     protected Color defaultColor = Color.black;
 
+    protected boolean showEdgesValidation = false;
+
     public GraphPanel(GameState gameState) {
 
         this.graph = gameState.getGraph();
@@ -29,6 +31,10 @@ public class GraphPanel extends JPanel {
 
         addMouseListener(new VertexClickListener(gameState, this, vertexSize));
 
+    }
+
+    public void showEdgesValidation() {
+        showEdgesValidation = true;
     }
 
     private void initializeCoordinates() {
@@ -111,10 +117,12 @@ public class GraphPanel extends JPanel {
 
     protected void drawEdges(Graphics g) {
 
-        g.setColor(defaultColor);
+        graph.validateEdges();
 
         Vertex[] vertices = graph.getVertices();
         for(Edge edge: graph.getEdges()) {
+
+            g.setColor(showEdgesValidation ? edge.getColor() : defaultColor);
 
             Vertex from = vertices[edge.from];
             Vertex to = vertices[edge.to];
@@ -122,6 +130,8 @@ public class GraphPanel extends JPanel {
             g.drawLine(from.x+vertexSize/2, from.y+vertexSize/2, to.x+vertexSize/2, to.y+vertexSize/2);
 
         }
+
+        g.setColor(defaultColor); // reset color to default
 
     }
 
