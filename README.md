@@ -1,6 +1,14 @@
 # DKE-Project Group 23
 
-Time tracking: https://docs.google.com/spreadsheets/d/1np752UbjdXQngAB3N8CpQkXrkS8FtnJw7NpbkqnJLCI/edit#gid=0
+# For examiners
+
+You can find detailed contribution of each team member here: https://docs.google.com/spreadsheets/d/1np752UbjdXQngAB3N8CpQkXrkS8FtnJw7NpbkqnJLCI/edit#gid=0
+
+In directory tasks there are also 3 exports in different formats (ods, pdf, xlsx) of the each team member contribution.
+
+The game is intended to run from "src/Run.java" file.
+
+# For team members:
 
 The book ["A Guide to Graph Colouring Algorithms and Applications"](http://opencarts.org/sachlaptrinh/pdf/16446.pdf) is good source.
 
