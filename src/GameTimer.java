@@ -28,7 +28,6 @@ public class GameTimer extends JLabel {
                     case RANDOM_ORDER:
                         label.setText(state.getSinceStartFormatted());
                 }
-                label.setText(state.getTillEndFormatted());
             }
         });
         timer.setInitialDelay(0);
