@@ -135,7 +135,7 @@ public class Graph {
 
     public int getChromaticNumber() {
         if(chromaticNumber == 0) {
-            chromaticNumber = Backtracking.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
+            chromaticNumber = ExactAlgorithm.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
         }
         return chromaticNumber;
     }

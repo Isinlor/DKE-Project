@@ -1,10 +1,25 @@
 import java.io.*;
 import java.util.*;
 
-public class Backtracking {
+/**
+ * This class allows to compute exact chromatic number.
+ *
+ * It is based on Bron Kerbosch algorithm in order to compute lower bound.
+ * Based on lower the algorithm tries to color the graph with more and more colors using backtracking algorithm.
+ *
+ * Author: Anna (see: sketchpad/anna/backtracking.java for original version)
+ * Integration: Tomek
+ */
+public class ExactAlgorithm {
 
     static boolean DEBUG = false;
 
+    /**
+     * @param numberOfVertices
+     * @param numberOfEdges
+     * @param edges
+     * @return
+     */
 	public static int getChromaticNumber(int numberOfVertices, int numberOfEdges, Edge[] edges) {
 
         class Node {
@@ -294,10 +309,7 @@ public class Backtracking {
         //! INSERT YOUR CODE HERE!
         Graph G = new Graph(numberOfVertices, numberOfEdges, edges);
 
-        int x = G.getChromaticNumber();
-        System.out.println("The chromatic number is: " + x);
-
-        return x;
+        return G.getChromaticNumber();
 
     }
 }
