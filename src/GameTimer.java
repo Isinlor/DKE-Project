@@ -15,6 +15,7 @@ public class GameTimer extends JLabel {
                 switch(state.getMode()) {
                     case BITTER_END:
                         label.setText(state.getSinceStartFormatted());
+                        break;
                     case UPPER_BOUND:
                         label.setText(state.getTillEndFormatted());
                         if(state.isTimeUp()) {
@@ -25,14 +26,22 @@ public class GameTimer extends JLabel {
                             );
                             Run.displaySpecificationScreen();
                         }
+                        break;
                     case RANDOM_ORDER:
                         label.setText(state.getSinceStartFormatted());
+                        break;
                 }
             }
         });
         timer.setInitialDelay(0);
         timer.start();
 
+    }
+
+    static public void reset() {
+        if(timer != null) {
+            timer.stop();
+        }
     }
 
 }

@@ -32,12 +32,14 @@ public class Run {
     }
 
     public static void displaySpecificationScreen() {
+        GameTimer.reset();
         contentPane.removeAll();
         contentPane.add(new SpecificationScreen());
         window.pack();
     }
 
     public static void displayGraphScreen(GameState state) {
+        GameTimer.reset();
         contentPane.removeAll();
         contentPane.add(new GraphScreen(state));
         window.pack();

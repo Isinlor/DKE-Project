@@ -43,10 +43,18 @@ public class GameState {
     }
 
     public long getTimeLimit() {
-        int chromaticNumberVsNUmberOfVertices = Math.abs(
+
+        int timeForVertices = getGraph().getNumberOfVertices() * 3;
+
+        int timeForEdges = getGraph().getNumberOfEdges() / 3;
+
+        int difficulty = Math.min(
+                getGraph().getChromaticNumber(),
                 getGraph().getNumberOfVertices() - getGraph().getChromaticNumber()
-        );
-        return (getGraph().getNumberOfVertices() + (long)Math.pow(getGraph().getChromaticNumber(), 2)) * 1000;
+        ) + 1;
+
+        return (timeForVertices + timeForEdges + (long)Math.pow(difficulty, 3)) * 1000;
+
     }
 
     public long getTillEnd() {
