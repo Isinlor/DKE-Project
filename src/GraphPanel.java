@@ -2,6 +2,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * The panel responsible for displaying a graph.
+ *
+ * It can generate visual representation of a graph. The arrangement is optimized.
+ *
+ * It can also indicate invalid edges as a hint.
+ *
+ * Original idea: Anna (see: sketchpad/anna/DrawingBoard.java)
+ * Implementation with graph arrangement optimization: Tomek
+ * Integration: Tomek
+ */
 public class GraphPanel extends JPanel {
 
     protected Graph graph;
@@ -15,6 +26,9 @@ public class GraphPanel extends JPanel {
 
     protected boolean showEdgesValidation = false;
 
+    /**
+     * @param gameState
+     */
     public GraphPanel(GameState gameState) {
 
         this.graph = gameState.getGraph();
@@ -33,10 +47,16 @@ public class GraphPanel extends JPanel {
 
     }
 
+    /**
+     * A hint function. Allows to start displaying edge validation.
+     */
     public void showEdgesValidation() {
         showEdgesValidation = true;
     }
 
+    /**
+     * Initialize coordinates of vertices.
+     */
     private void initializeCoordinates() {
 
         Vertex[] vertices = new Vertex[graph.getNumberOfVertices() + 1];
@@ -78,6 +98,9 @@ public class GraphPanel extends JPanel {
 
     }
 
+    /**
+     * @param g
+     */
     public void paintComponent(Graphics g) {
 
         // See: https://stackoverflow.com/a/13281121/893222
@@ -90,6 +113,9 @@ public class GraphPanel extends JPanel {
 
     }
 
+    /**
+     * @param g
+     */
     protected void turnAntialiasingOn(Graphics g) {
         ((Graphics2D)g).setRenderingHint(
             RenderingHints.KEY_ANTIALIASING,
@@ -97,6 +123,9 @@ public class GraphPanel extends JPanel {
         );
     }
 
+    /**
+     * @param g
+     */
     protected void drawVertices(Graphics g) {
         for(Vertex vertex: graph.getVertices()) {
             //noinspection ConstantConditions
@@ -115,6 +144,9 @@ public class GraphPanel extends JPanel {
         }
     }
 
+    /**
+     * @param g
+     */
     protected void drawEdges(Graphics g) {
 
         graph.validateEdges();
@@ -193,6 +225,10 @@ public class GraphPanel extends JPanel {
 
     }
 
+    /**
+     * @param swapA
+     * @param swapB
+     */
     protected void swapCoordinates(int swapA, int swapB) {
 
         Vertex[] vertices = graph.getVertices();

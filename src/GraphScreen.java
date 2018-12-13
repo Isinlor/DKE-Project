@@ -2,6 +2,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * This screen integrates all elements of a game.
+ * Graph display, color selection panel, timer, colors used counter, exit button and hints.
+ *
+ * There are two hints functions: start validating graph and show chromatic number.
+ *
+ * Author: Tomek
+ */
 public class GraphScreen extends JPanel {
 
     public GraphScreen(GameState gameState) {

@@ -1,5 +1,15 @@
+/**
+ * Allows to generate a random graph.
+ *
+ * Author: Tomek
+ */
 public class Random {
 
+    /**
+     * @param vertices
+     * @param edges
+     * @return
+     */
     public static Graph generate(int vertices, int edges) {
 
         // number of edges in a fully connected graph

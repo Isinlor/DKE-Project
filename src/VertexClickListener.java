@@ -4,6 +4,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Listens to vertex clicks.
+ *
+ * After click on vertex the color is adjusted and dependent on game mode the game may be finished.
+ *
+ * Author: Tomek
+ */
 public class VertexClickListener extends MouseAdapter {
 
     private GameState gameState;

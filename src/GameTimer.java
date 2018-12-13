@@ -1,10 +1,22 @@
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * Allows to time the game.
+ *
+ * Based on game mode the counter will count up or down.
+ * If time runs out the game ends.
+ *
+ * Author: Tomek
+ * Contribution on counting down: Wen
+ */
 public class GameTimer extends JLabel {
 
     static Timer timer;
 
+    /**
+     * @param state
+     */
     public GameTimer(GameState state) {
         super();
 
@@ -38,6 +50,9 @@ public class GameTimer extends JLabel {
 
     }
 
+    /**
+     * Allows to reset timer if user exits game before finishing.
+     */
     static public void reset() {
         if(timer != null) {
             timer.stop();

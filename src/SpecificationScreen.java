@@ -9,6 +9,14 @@ import javax.swing.filechooser.FileSystemView;
 
 /**
  * This screen allows to specify details of a game.
+ *
+ * It allows to select game modes and load graph from a file or indicate specification and generate random graph.
+ *
+ * The graph specification is validated and in case of input errors user is notified.
+ *
+ * Authors: Selim, Tomek
+ *
+ * For original version see: sketchpad/selim/Frame1Viewer.java
  */
 public class SpecificationScreen extends JPanel {
 
@@ -284,7 +292,7 @@ public class SpecificationScreen extends JPanel {
             layoutSettings.gridy = 1;
             add(radioButtonsPanel, layoutSettings);
 
-            // select default game mode
+            // select default option
             onSwitchListener.radioButtonSwitched(options[0][0]);
             group.getElements().nextElement().setSelected(true);
 

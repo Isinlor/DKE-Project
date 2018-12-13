@@ -3,10 +3,14 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+/**
+ * This is the main class that allows to run the program.
+ *
+ * It allows to switch between graph specification and display graph screens.
+ *
+ * Author: Tomek
+ */
 public class Run {
-
-    final static public int WINDOW_WIDTH = 1500;
-    final static public int WINDOW_HEIGHT = 1000;
 
     static JFrame window;
     static Container contentPane;

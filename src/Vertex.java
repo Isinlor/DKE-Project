@@ -1,5 +1,10 @@
 import java.awt.*;
 
+/**
+ * Represents a vertex.
+ *
+ * Author: Tomek
+ */
 class Vertex {
 
     public int x;

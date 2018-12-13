@@ -219,7 +219,7 @@ public class ExactAlgorithm {
             }
 
             /**
-             * Backtracking algorithm
+             * ExactAlgorithm algorithm
              */
             public boolean Backtracking(int m, Node x) {
 

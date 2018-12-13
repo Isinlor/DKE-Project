@@ -1,10 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Indicates one of three possible game modes.
+ *
+ * Author: Tomek
+ */
 enum GameMode {
     BITTER_END, UPPER_BOUND, RANDOM_ORDER
 };
 
+/**
+ * The current game state:
+ * - game mode
+ * - time till end / time since start
+ * - graph
+ * - currently selected color (allows to color a vertex)
+ *
+ * Author: Tomek
+ */
 public class GameState {
 
     private Graph graph;

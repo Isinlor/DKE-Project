@@ -4,6 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * This is color selection panel.
+ *
+ * It generates panel with list of buttons that allow to select different colors.
+ * Currently selected color is indicated.
+ *
+ * Author: Tomek and Sjors
+ *
+ * (See Sjors original file in sketchpad/sjors/ColorJButtons.java)
+ */
 public class ColorSelectionPanel extends JPanel {
 
     private GameState gameState;

@@ -4,6 +4,8 @@ import java.awt.*;
  * Represents an edge from vertex "from" to vertex "to"
  *
  * Remember that vertices start from 1!
+ *
+ * Author: Tomek
  */
 public class Edge {
 
@@ -20,11 +22,18 @@ public class Edge {
      */
 	public boolean valid = true;
 
+	/**
+	 * @param from
+	 * @param to
+	 */
 	public Edge(int from, int to) {
 		this.from = from;
 		this.to = to;
 	}
 
+	/**
+	 * @return edge color indicating whether edge is valid
+	 */
 	public Color getColor() {
 	    return valid ? DEFAULT_COLOR : INVALID_COLOR;
     }

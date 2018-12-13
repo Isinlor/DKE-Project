@@ -1,6 +1,15 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The main class containing methods and information related to the graph.
+ *
+ * The class can be constructed based on adjacency matrix or list of edges.
+ *
+ * It can indicate whether the graph is fully, correctly and optimally colored.
+ *
+ * Author: Tomek
+ */
 public class Graph {
 
     /**
@@ -10,10 +19,19 @@ public class Graph {
      */
     private int numberOfVertices;
 
+    /**
+     * List of edges.
+     */
     private Edge[] edges;
 
+    /**
+     * List of vertices.
+     */
     protected Vertex[] vertices;
 
+    /**
+     * Cache of chromatic number.
+     */
     protected int chromaticNumber;
 
     /**
@@ -23,6 +41,12 @@ public class Graph {
      */
     private int[][] adjacencyMatrix;
 
+    /**
+     * Constructor based on list of edges.
+     *
+     * @param edges
+     * @param numberOfVertices
+     */
     public Graph(Edge[] edges, int numberOfVertices) {
 
         this.edges = edges;
@@ -41,6 +65,13 @@ public class Graph {
 
     }
 
+    /**
+     * Constructor based on adjacency matrix.
+     *
+     * @param adjacencyMatrix
+     * @param numberOfVertices
+     * @param numberOfEdges
+     */
     public Graph(int[][] adjacencyMatrix, int numberOfVertices, int numberOfEdges) {
 
         this.adjacencyMatrix = adjacencyMatrix;
@@ -107,6 +138,9 @@ public class Graph {
         return adjacencyMatrix[vertexA][vertexB] == 1;
     }
 
+    /**
+     * @return Whether all vertices are colored.
+     */
     public boolean isFullyColored() {
         for(Vertex vertex: vertices) {
             if(vertex == null) { continue; }
@@ -117,6 +151,9 @@ public class Graph {
         return true;
     }
 
+    /**
+     * @return Amount of colors in use.
+     */
     public int getColorCount() {
 
         int count = 0;
@@ -133,6 +170,9 @@ public class Graph {
 
     }
 
+    /**
+     * @return Computes and caches the chromatic number.
+     */
     public int getChromaticNumber() {
         if(chromaticNumber == 0) {
             chromaticNumber = ExactAlgorithm.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
@@ -140,14 +180,23 @@ public class Graph {
         return chromaticNumber;
     }
 
+    /**
+     * @return Whether the graph is optimally colored.
+     */
     public boolean isOptimallyColored() {
         return isGraphColoredCorrectly() && getColorCount() <= getChromaticNumber();
     }
 
+    /**
+     * @return Whether the graph is colored correctly.
+     */
     public boolean isGraphColoredCorrectly() {
         return isFullyColored() && validateEdges();
     }
 
+    /**
+     * @return Validates edges. Allows to indicate which edges are invalid.
+     */
     public boolean validateEdges() {
         boolean valid = true;
         for (Edge edge: getEdges()) {

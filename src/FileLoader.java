@@ -1,12 +1,23 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * Allows to load graph from a file.
+ *
+ * Author: Steven Kelk
+ * Integration: Tomek (Added custom exceptions and it returns a graph.)
+ */
 public class FileLoader {
 
     public final static boolean DEBUG = false;
 
     public final static String COMMENT = "//";
 
+    /**
+     * @param pathToFileWithGraph
+     *
+     * @return the graph from file
+     */
     public static Graph load(String pathToFileWithGraph) {
 
         try {
