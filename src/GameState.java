@@ -42,8 +42,31 @@ public class GameState {
         return System.currentTimeMillis() - getStartedAt();
     }
 
+    public long getTimeLimit() {
+        int chromaticNumberVsNUmberOfVertices = Math.abs(
+                getGraph().getNumberOfVertices() - getGraph().getChromaticNumber()
+        );
+        return (getGraph().getNumberOfVertices() + (long)Math.pow(getGraph().getChromaticNumber(), 2)) * 1000;
+    }
+
+    public long getTillEnd() {
+        return Math.max(0, getTimeLimit() - getSinceStart());
+    }
+
+    public boolean isTimeUp() {
+        return getTillEnd() == 0;
+    }
+
     public String getSinceStartFormatted() {
         long timeInSeconds = getSinceStart() / 1000;
+        return getFormattedTime(timeInSeconds);
+    }
+
+    public String getTillEndFormatted() {
+        return getFormattedTime(getTillEnd() / 1000);
+    }
+
+    private String getFormattedTime(long timeInSeconds) {
         return String.format(
                 "%d:%02d:%02d", // hours:minutes:seconds
                 timeInSeconds / (60 * 60), // hours

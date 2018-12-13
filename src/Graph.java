@@ -14,6 +14,8 @@ public class Graph {
 
     protected Vertex[] vertices;
 
+    protected int chromaticNumber;
+
     /**
      * Other representation of edges in a graph.
      *
@@ -132,7 +134,10 @@ public class Graph {
     }
 
     public int getChromaticNumber() {
-        return Backtracking.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
+        if(chromaticNumber == 0) {
+            chromaticNumber = Backtracking.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
+        }
+        return chromaticNumber;
     }
 
     public boolean isOptimallyColored() {
