@@ -8,6 +8,8 @@ In directory tasks there are also 3 exports in different formats (ods, pdf, xlsx
 
 The game is intended to run from "src/Run.java" file.
 
+Unit tests are in "tests" directory. You can run "test/GraphTests.java". Important! Tests must be run with Must be run with -ea or -enableassertions option! 
+
 # For team members:
 
 The book ["A Guide to Graph Colouring Algorithms and Applications"](http://opencarts.org/sachlaptrinh/pdf/16446.pdf) is good source.

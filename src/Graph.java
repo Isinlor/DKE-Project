@@ -175,7 +175,7 @@ public class Graph {
      */
     public int getChromaticNumber() {
         if(chromaticNumber == 0) {
-            chromaticNumber = ExactAlgorithm.getChromaticNumber(getNumberOfVertices(), getNumberOfEdges(), getEdges());
+            chromaticNumber = ExactAlgorithm.getChromaticNumber(getNumberOfVertices(), getEdges());
         }
         return chromaticNumber;
     }

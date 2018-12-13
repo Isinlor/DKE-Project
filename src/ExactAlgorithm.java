@@ -16,11 +16,10 @@ public class ExactAlgorithm {
 
     /**
      * @param numberOfVertices
-     * @param numberOfEdges
      * @param edges
      * @return
      */
-	public static int getChromaticNumber(int numberOfVertices, int numberOfEdges, Edge[] edges) {
+	public static int getChromaticNumber(int numberOfVertices, Edge[] edges) {
 
         class Node {
 
@@ -307,7 +306,7 @@ public class ExactAlgorithm {
         //! there will be n vertices in the graph, numbered 1 to n
 
         //! INSERT YOUR CODE HERE!
-        Graph G = new Graph(numberOfVertices, numberOfEdges, edges);
+        Graph G = new Graph(numberOfVertices, edges.length, edges);
 
         return G.getChromaticNumber();
 
