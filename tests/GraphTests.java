@@ -37,13 +37,6 @@ class GraphTests extends SimpleUnitTest {
 
         });
 
-        it("computes chromatic number in triangle", () -> {
-
-            Edge[] edges = {new Edge(1, 2), new Edge(2, 3), new Edge(3, 1)};
-            assert ExactAlgorithm.getChromaticNumber(3, edges) == 3;
-
-        });
-
         System.out.println("\nRandom:");
 
         it("generates simple random graph", () -> {
