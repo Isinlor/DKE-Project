@@ -4,6 +4,9 @@
 
 You can find detailed contribution of each team member here: https://docs.google.com/spreadsheets/d/1np752UbjdXQngAB3N8CpQkXrkS8FtnJw7NpbkqnJLCI/edit#gid=0
 
+The presentation which took place on 14 December 2018 is accessable with this link: 
+https://docs.google.com/presentation/d/1O6KO1KydLj4JQZKYvNhDzfKzo45gjUUPvWc-iqWu3F4/edit?usp=sharing
+
 In directory tasks there are also 3 exports in different formats (ods, pdf, xlsx) of the each team member contribution.
 
 The game is intended to run from "src/Run.java" file.
