@@ -10,6 +10,8 @@ The game is intended to run from "src/Run.java" file.
 
 Unit tests are in "tests" directory. You can run "test/GraphTests.java". Important! Tests must be run with Must be run with -ea or -enableassertions option! 
 
+Here are the slides for the presentation: https://docs.google.com/presentation/d/1O6KO1KydLj4JQZKYvNhDzfKzo45gjUUPvWc-iqWu3F4/edit?usp=sharing
+
 # For team members:
 
 The book ["A Guide to Graph Colouring Algorithms and Applications"](http://opencarts.org/sachlaptrinh/pdf/16446.pdf) is good source.
