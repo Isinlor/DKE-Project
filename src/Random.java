@@ -16,14 +16,14 @@ public class Random {
         int maxEdges = (vertices * (vertices - 1)) / 2;
         if(edges > maxEdges) {
             throw new WrongGraphSpecificationException(""
-                + "Graph having " + vertices + " vertices "
+                + "GraphX having " + vertices + " vertices "
                 + "can have maximally " + maxEdges + " edges!\n"
                 + "While you requested " + edges + " edges!"
             );
         }
 
         if(vertices < 1) {
-            throw new WrongGraphSpecificationException("Graph must have at least one vertice!");
+            throw new WrongGraphSpecificationException("GraphX must have at least one vertice!");
         }
 
         if(edges < 0) {

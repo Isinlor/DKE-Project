@@ -9,18 +9,8 @@ import java.awt.*;
  */
 public class Edge {
 
-    final static public Color DEFAULT_COLOR = Color.black;
-    final static public Color INVALID_COLOR = Color.red;
-
 	public int from;
 	public int to;
-
-    /**
-     * Whether from and to have the same colors.
-     *
-     * If either of ends is not colored, edge is valid.
-     */
-	public boolean valid = true;
 
 	/**
 	 * @param from
@@ -31,11 +21,8 @@ public class Edge {
 		this.to = to;
 	}
 
-	/**
-	 * @return edge color indicating whether edge is valid
-	 */
-	public Color getColor() {
-	    return valid ? DEFAULT_COLOR : INVALID_COLOR;
-    }
+	public String toString() {
+		return from + " " + to + "\n";
+	}
 
 }

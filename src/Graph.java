@@ -1,5 +1,7 @@
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * The main class containing methods and information related to the graph.
@@ -12,27 +14,17 @@ import java.util.ArrayList;
  */
 public class Graph {
 
+    static final boolean PRINT = false;
+
     /**
-     * The number of vertices.
-     *
-     * Remember that vertices start from 1!
+     * List of vertices.
      */
-    private int numberOfVertices;
+    private Set<Integer> vertices = new HashSet<Integer>();
 
     /**
      * List of edges.
      */
     private Edge[] edges;
-
-    /**
-     * List of vertices.
-     */
-    protected Vertex[] vertices;
-
-    /**
-     * Cache of chromatic number.
-     */
-    protected int chromaticNumber;
 
     /**
      * Other representation of edges in a graph.
@@ -42,6 +34,16 @@ public class Graph {
     private int[][] adjacencyMatrix;
 
     /**
+     * Yet another representation of edges in a graph.
+     *
+     * It's a map from a vertex to the set of vertex neighbours.
+     */
+    private Map<Integer, Set<Integer>> adjacencyMap = new HashMap<>();
+
+    private int lowerBound;
+    private int upperBound;
+
+    /**
      * Constructor based on list of edges.
      *
      * @param edges
@@ -49,8 +51,8 @@ public class Graph {
      */
     public Graph(Edge[] edges, int numberOfVertices) {
 
+        setVertices(numberOfVertices);
         this.edges = edges;
-        this.numberOfVertices = numberOfVertices;
 
         // initialize adjacency matrix
         adjacencyMatrix = new int[numberOfVertices+1][numberOfVertices+1];
@@ -63,6 +65,9 @@ public class Graph {
 
         }
 
+        createAdjacencyMap();
+        if(edges.length > 0) { addLowerBound(2); };
+
     }
 
     /**
@@ -74,8 +79,9 @@ public class Graph {
      */
     public Graph(int[][] adjacencyMatrix, int numberOfVertices, int numberOfEdges) {
 
+        setVertices(numberOfVertices);
+
         this.adjacencyMatrix = adjacencyMatrix;
-        this.numberOfVertices = numberOfVertices;
 
         edges = new Edge[numberOfEdges];
 
@@ -106,14 +112,70 @@ public class Graph {
             );
         }
 
+        createAdjacencyMap();
+        if(edges.length > 1) { addLowerBound(2); };
+
+    }
+
+    private void setVertices(int numberOfVertices) {
+        this.upperBound = numberOfVertices;
+        for (int vertex = 1; vertex <= numberOfVertices; vertex++) {
+            vertices.add(vertex);
+        }
+    }
+
+    private void createAdjacencyMap() {
+        for (int vertexA: vertices) {
+            Set<Integer> neighbours = new HashSet<Integer>();
+            for (int vertexB: vertices) {
+                if(vertexA == vertexB) continue;
+                if(isAdjacent(vertexA, vertexB)) neighbours.add(vertexB);
+            }
+            adjacencyMap.put(vertexA, neighbours);
+        }
     }
 
     public int getNumberOfVertices() {
-        return numberOfVertices;
+        return vertices.size();
     }
 
     public int getNumberOfEdges() {
         return edges.length;
+    }
+
+    public int getMaxNumberOfEdges() {
+        return (getNumberOfVertices() * (getNumberOfVertices() - 1)) / 2;
+    }
+
+    public boolean isComplete() {
+        return getMaxNumberOfEdges() == getNumberOfEdges();
+    }
+
+    public void addChromaticNumber(int chromaticNumber) {
+        addLowerBound(chromaticNumber);
+        addUpperBound(chromaticNumber);
+    }
+
+    public void addLowerBound(int lowerBound) {
+        if(lowerBound > this.lowerBound) {
+            this.lowerBound = lowerBound;
+            if(PRINT) System.out.println("Lower bound = " + lowerBound);
+        }
+    }
+
+    public void addUpperBound(int upperBound) {
+        if(upperBound < this.upperBound) {
+            this.upperBound = upperBound;
+            if(PRINT) System.out.println("Upper bound = " + upperBound);
+        }
+    }
+
+    public int getLowerBound() {
+        return lowerBound;
+    }
+
+    public int getUpperBound() {
+        return upperBound;
     }
 
     /**
@@ -123,12 +185,34 @@ public class Graph {
         return edges;
     }
 
-    public Vertex[] getVertices() {
+    public Set<Integer> getVertices() {
         return vertices;
     }
 
-    public void setVertices(Vertex[] vertices) {
-        this.vertices = vertices;
+    public SortedSet<Integer> getDescendingDegreeSortedVertices() {
+        SortedSet<Integer> sortedVertices = new ConcurrentSkipListSet<Integer>(
+                (Integer vertexA, Integer vertexB) -> {
+                    if(getDegree(vertexA) == getDegree(vertexB)) {
+                        return Integer.compare(vertexA, vertexB);
+                    }
+                    return Integer.compare(getDegree(vertexA), getDegree(vertexB));
+                }
+        );
+        sortedVertices.addAll(vertices);
+        return sortedVertices;
+    }
+
+    public SortedSet<Integer> getAscendingDegreeSortedVertices() {
+        SortedSet<Integer> sortedVertices = new ConcurrentSkipListSet<Integer>(
+                (Integer vertexA, Integer vertexB) -> {
+                    if(getDegree(vertexA) == getDegree(vertexB)) {
+                        return -Integer.compare(vertexA, vertexB);
+                    }
+                    return -Integer.compare(getDegree(vertexA), getDegree(vertexB));
+                }
+        );
+        sortedVertices.addAll(vertices);
+        return sortedVertices;
     }
 
     /**
@@ -138,80 +222,90 @@ public class Graph {
         return adjacencyMatrix[vertexA][vertexB] == 1;
     }
 
-    /**
-     * @return Whether all vertices are colored.
-     */
-    public boolean isFullyColored() {
-        for(Vertex vertex: vertices) {
-            if(vertex == null) { continue; }
-            if(!vertex.hasColor()) {
-                return false;
-            }
-        }
-        return true;
+    public Map<Integer, Set<Integer>> getAdjacencyMap() {
+        return adjacencyMap;
     }
 
-    /**
-     * @return Amount of colors in use.
-     */
-    public int getColorCount() {
+    public Set<Integer> getNeighbours(int vertex) {
+        return adjacencyMap.get(vertex);
+    }
 
-        int count = 0;
-        ArrayList<Color> colors = new ArrayList<Color>();
-        for(Vertex vertex: vertices) {
-            if(vertex == null) { continue; }
-            if(vertex.hasColor() && !colors.contains(vertex.getColor())) {
-                count++;
-                colors.add(vertex.getColor());
+    public int getDegree(int vertex) {
+        return getNeighbours(vertex).size();
+    }
+
+    public Graph simplify() {
+
+        // list vertices with degree 1 to remove
+        ArrayList<Integer> verticesToRemove = new ArrayList<Integer>();
+        for (Integer vertex: vertices) {
+            if(getDegree(vertex) < 2) {
+                verticesToRemove.add(vertex);
             }
         }
 
-        return count;
-
-    }
-
-    /**
-     * @return Computes and caches the chromatic number.
-     */
-    public int getChromaticNumber() {
-        if(chromaticNumber == 0) {
-            chromaticNumber = ExactAlgorithm.getChromaticNumber(getNumberOfVertices(), getEdges());
+        if(verticesToRemove.isEmpty()) {
+            return this;
         }
-        return chromaticNumber;
-    }
 
-    /**
-     * @return Whether the graph is optimally colored.
-     */
-    public boolean isOptimallyColored() {
-        return isGraphColoredCorrectly() && getColorCount() <= getChromaticNumber();
-    }
-
-    /**
-     * @return Whether the graph is colored correctly.
-     */
-    public boolean isGraphColoredCorrectly() {
-        return isFullyColored() && validateEdges();
-    }
-
-    /**
-     * @return Validates edges. Allows to indicate which edges are invalid.
-     */
-    public boolean validateEdges() {
-        boolean valid = true;
-        for (Edge edge: getEdges()) {
-
-            Vertex fromVertex = vertices[edge.from];
-            Vertex toVertex = vertices[edge.to];
-
-            boolean bothVerticesColored = fromVertex.hasColor() && toVertex.hasColor();
-
-            // validity is used for coloring and edge with either of vertices not colored is valid
-            edge.valid = !bothVerticesColored || fromVertex.getColor() != toVertex.getColor();
-            valid = valid && edge.valid;
-
+        // retain continuity in list of vertices
+        // map old vertices to new vertices
+        int removedVerticesCounter = 0;
+        HashMap<Integer, Integer> oldToNewVertexMapping = new HashMap<>();
+        for(Integer vertex: vertices) {
+            if(verticesToRemove.contains(vertex)) {
+                removedVerticesCounter++;
+            } else {
+                oldToNewVertexMapping.put(vertex, vertex - removedVerticesCounter);
+            }
         }
-        return valid;
+
+        // list edges to retain, only edges of not removed vertices are retained
+        ArrayList<Edge> retainedEdges = new ArrayList<>();
+        for (Edge edge: edges) {
+            if(!verticesToRemove.contains(edge.from) && !verticesToRemove.contains(edge.to)) {
+                retainedEdges.add(edge);
+            }
+//            else {
+//                System.out.print(edge);
+//                System.out.println("From degree: " + getDegree(edge.from));
+//                System.out.println("To degree: " + getDegree(edge.to));
+//                System.out.println();
+//            }
+        }
+
+        // map old retained edges, to new edges
+        ArrayList<Edge> newEdges = new ArrayList<>();
+        for(Edge oldEdge: retainedEdges) {
+            newEdges.add(new Edge(
+                oldToNewVertexMapping.get(oldEdge.from),
+                oldToNewVertexMapping.get(oldEdge.to)
+            ));
+        }
+
+        if(edges.length != 0 && newEdges.isEmpty()) {
+            Edge[] lastEdge = {new Edge(1, 2)};
+            return new Graph(lastEdge, 2);
+        }
+
+        // return simplified graph
+        return (new Graph(newEdges.toArray(new Edge[0]), oldToNewVertexMapping.size())).simplify();
+
+    }
+
+    public String getShortDescription() {
+        String string = "";
+        string += "VERTICES = " + getNumberOfVertices() + "\n";
+        string += "EDGES = " + getNumberOfEdges() + "\n";
+        return string;
+    }
+
+    public String toString() {
+        String string = getShortDescription();
+        for (Edge edge: edges) {
+            string += edge;
+        }
+        return string;
     }
 
 }
