@@ -1,17 +1,19 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Backtracking {
 
     private Graph graph;
     private int[] vertexColor;
     private int maxColors;
+    private int startingVertex;
+    private SortedMap<Integer, Integer> nextVertexMap;
 
     public Backtracking(Graph graph) {
         this.graph = graph;
         setupVertexColor();
+        setupNextVertexMap();
     }
 
     public void colorClique(Set<Integer> clique) {
@@ -50,9 +52,23 @@ public class Backtracking {
         Arrays.fill(vertexColor, 0);
     }
 
+    private void setupNextVertexMap() {
+        nextVertexMap = new ConcurrentSkipListMap<>();
+        SortedSet<Integer> sortedVertices = graph.getDescendingDegreeSortedVertices();
+        Iterator<Integer> sortedVerticesIteratorFrom = sortedVertices.iterator();
+        Iterator<Integer> sortedVerticesIteratorTo = sortedVertices.iterator();
+
+        startingVertex = sortedVerticesIteratorTo.next();
+        while(sortedVerticesIteratorFrom.hasNext()) {
+            int from = sortedVerticesIteratorFrom.next();
+            int to = sortedVerticesIteratorTo.hasNext() ? sortedVerticesIteratorTo.next() : 0;
+            nextVertexMap.put(from, to);
+        }
+    }
+
     private boolean canBeColoredWith(int maxColors) {
         this.maxColors = maxColors;
-        return tryToColor(1);
+        return tryToColor(startingVertex);
     }
 
     /**
@@ -60,14 +76,14 @@ public class Backtracking {
      */
     private boolean tryToColor(int vertex) {
 
-        if(vertex > graph.getNumberOfVertices()) return true;
-        if(vertexColor[vertex] > 0) return tryToColor(vertex + 1);
+        if(vertex == 0) return true;
+        if(vertexColor[vertex] > 0) return tryToColor(nextVertex(vertex));
 
         for(int color = 1; color <= maxColors; color++) {
 
             if(isAvailable(vertex, color)) {
                 vertexColor[vertex] = color;
-                if (tryToColor(vertex + 1)) {
+                if (tryToColor(nextVertex(vertex))) {
                     vertexColor[vertex] = 0;
                     return true;
                 }
@@ -77,6 +93,10 @@ public class Backtracking {
         }
 
         return false;
+    }
+
+    private int nextVertex(int currentVertex) {
+        return nextVertexMap.get(currentVertex);
     }
 
     /**
