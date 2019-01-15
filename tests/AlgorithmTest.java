@@ -31,7 +31,7 @@ public class AlgorithmTest {
     public static void testDirectory(String directory) throws InterruptedException, ExecutionException, TimeoutException {
         File[] graphFiles = new File(directory).listFiles(new FileFilter() {
             public boolean accept(File file) {
-                return file.getName().endsWith(".txt");
+                return file.getName().endsWith(".txt"); // && !file.getName().endsWith("05.txt");
             }
         });
 
@@ -43,7 +43,7 @@ public class AlgorithmTest {
 
             Graph graph = FileLoader.load(graphFile.getAbsolutePath()).simplify();
             MaxClique maxClique = new MaxClique(graph);
-            Greedy2.findUpperBound(graph);
+            Greedy.findUpperBound(graph);
 
 //            System.out.println(graph.getDescendingDegreeSortedVertices());
 
@@ -51,21 +51,17 @@ public class AlgorithmTest {
 
             try {
 
-                CompletableFuture.runAsync(() -> {
+                if(graph.getLowerBound() != graph.getUpperBound()) {
 
-//                    return ExactAlgorithm.getChromaticNumber(
-//                            graph.getNumberOfVertices(),
-//                            graph.getEdges(),
-//                            graph.getLowerBound()
-//                    );
+                    CompletableFuture.runAsync(() -> {
 
-                    Backtracking backtracking = new Backtracking(graph);
-                    backtracking.colorClique(maxClique.getMaxClique());
-                    backtracking.findUpperBound();
+                        Backtracking backtracking = new Backtracking(graph);
+                        backtracking.colorClique(maxClique.getMaxClique());
+                        backtracking.findUpperBound();
 
-//                    return graph.getUpperBound() == graph.getLowerBound() ? graph.getUpperBound() : 0;
+                    }).get(3, TimeUnit.SECONDS);
 
-                }).get(3, TimeUnit.SECONDS);
+                }
 
                 System.out.print("\tL: " + graph.getLowerBound());
                 System.out.print("\tU: " + graph.getUpperBound());
