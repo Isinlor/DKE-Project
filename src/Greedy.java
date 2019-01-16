@@ -10,7 +10,6 @@ public class Greedy {
     static void findUpperBound(Graph ofGraph) {
 
         graph = ofGraph;
-        vertexColor = new int[graph.getNumberOfVertices() + 1];
 
         graph.addUpperBound(findColoring(graph.getVertices()));
         graph.addUpperBound(findColoring(graph.getDescendingDegreeSortedVertices()));
@@ -20,6 +19,7 @@ public class Greedy {
 
     private static int findColoring(Set<Integer> vertices) {
         int upperBound = 0;
+        vertexColor = new int[graph.getNumberOfVertices() + 1];
         for (int vertex: vertices) {
             for (int color = 1; color <= graph.getNumberOfVertices(); color++) {
                 if(isAvailable(vertex, color)) {
