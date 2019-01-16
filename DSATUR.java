@@ -134,7 +134,6 @@ import java.util.*;
 		 	 
 		 	 while(coloredVertices < numberOfVertices){
 		 	 
-		 	 	 System.out.println("Wow");
 		 	 	 Node max = maxSaturationDegree();
 		 	 	 boolean colored = false;
 		 	 	 
