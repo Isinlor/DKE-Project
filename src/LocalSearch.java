@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -21,15 +22,7 @@ public class LocalSearch {
 
             Integer[] newSortedVertices = sortedVertices.clone();
 
-            int indexA = rng.nextInt(numberOfVertices);
-            int vertexA = newSortedVertices[indexA];
-
-            int indexB = rng.nextInt(numberOfVertices);
-            while(indexA == indexB) indexB = rng.nextInt(numberOfVertices);
-            int vertexB = newSortedVertices[indexB];
-
-            newSortedVertices[indexA] = vertexB;
-            newSortedVertices[indexB] = vertexA;
+            swapVertices(numberOfVertices, rng, newSortedVertices);
 
             int newUpperBound = findColoring(newSortedVertices, graph.getUpperBound() - 1);
             if(newUpperBound != 0) {
@@ -42,6 +35,18 @@ public class LocalSearch {
 
         }
 
+    }
+
+    private static void swapVertices(int numberOfVertices, Random rng, Integer[] newSortedVertices) {
+        int indexA = rng.nextInt(numberOfVertices);
+        int vertexA = newSortedVertices[indexA];
+
+        int indexB = rng.nextInt(numberOfVertices);
+        while(indexA == indexB) indexB = rng.nextInt(numberOfVertices);
+        int vertexB = newSortedVertices[indexB];
+
+        newSortedVertices[indexA] = vertexB;
+        newSortedVertices[indexB] = vertexA;
     }
 
     private static int findColoring(Integer[] vertices, int maxColors) {
