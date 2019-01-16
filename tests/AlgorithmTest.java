@@ -42,12 +42,13 @@ public class AlgorithmTest {
             System.out.print(graphFile.getName() + ":");
 
             Graph graph = FileLoader.load(graphFile.getAbsolutePath()).simplify();
-            MaxClique maxClique = new MaxClique(graph);
+
+            LocalSearch.findUpperBound(graph);
             Greedy.findUpperBound(graph);
 
-//            System.out.println(graph.getDescendingDegreeSortedVertices());
-
 //            if(true) continue;
+
+            MaxClique maxClique = new MaxClique(graph);
 
             try {
 
