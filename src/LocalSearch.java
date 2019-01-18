@@ -31,7 +31,7 @@ public class LocalSearch {
                 lastUpdateAt = System.currentTimeMillis();
             }
 
-            if(lastUpdateAt < (System.currentTimeMillis() - 1000)) return;
+            if(lastUpdateAt < (System.currentTimeMillis() - 200)) return;
 
         }
 
