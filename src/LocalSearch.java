@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.Random;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class LocalSearch {
 
@@ -15,23 +14,24 @@ public class LocalSearch {
 
         int numberOfVertices = graph.getNumberOfVertices();
         java.util.Random rng = new java.util.Random();
-        Integer[] sortedVertices = graph.getDescendingDegreeSortedVertices().toArray(new Integer[0]);
+
+        Integer[] sortedVertices = graph.getSortedVertices().toArray(new Integer[0]);
+        Integer[] newSortedVertices = sortedVertices.clone();
 
         long lastUpdateAt = System.currentTimeMillis();
         for (int i = 0; i < 1000000; i++) {
 
-            Integer[] newSortedVertices = sortedVertices.clone();
-
-            swapVertices(numberOfVertices, rng, newSortedVertices);
-
             int newUpperBound = findColoring(newSortedVertices, graph.getUpperBound() - 1);
             if(newUpperBound != 0) {
-                graph.addUpperBound(newUpperBound);
+                graph.addSortedVertices(newUpperBound, new ConcurrentSkipListSet<>(Arrays.asList(newSortedVertices)));
                 sortedVertices = newSortedVertices;
                 lastUpdateAt = System.currentTimeMillis();
             }
 
             if(lastUpdateAt < (System.currentTimeMillis() - 200)) return;
+
+            newSortedVertices = sortedVertices.clone();
+            swapVertices(numberOfVertices, rng, newSortedVertices);
 
         }
 
