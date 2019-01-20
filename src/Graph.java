@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -20,6 +21,12 @@ public class Graph {
      * List of vertices.
      */
     private Set<Integer> vertices = new HashSet<Integer>();
+
+    /**
+     * List of vertices sorted in a way that a greedy algorithm to use the least amount of colors.
+     */
+    private SortedSet<Integer> sortedVertices = new ConcurrentSkipListSet<>();
+    private int amountOfColorsNeededForSortedVertices;
 
     /**
      * List of edges.
@@ -187,6 +194,29 @@ public class Graph {
 
     public Set<Integer> getVertices() {
         return vertices;
+    }
+
+    public SortedSet<Integer> getSortedVertices() {
+        if(sortedVertices.isEmpty()) {
+            return getDescendingDegreeSortedVertices();
+        }
+        return sortedVertices;
+    }
+
+    public void addSortedVertices(int colors, SortedSet<Integer> sortedVertices) {
+
+        addUpperBound(colors);
+
+        if(sortedVertices.size() != getNumberOfVertices()) {
+            (new Exception("Wrong amount of sorted vertices!")).printStackTrace();
+            System.exit(0);
+        }
+
+        if(colors < amountOfColorsNeededForSortedVertices) {
+            amountOfColorsNeededForSortedVertices = colors;
+            this.sortedVertices = sortedVertices;
+        }
+
     }
 
     public SortedSet<Integer> getDescendingDegreeSortedVertices() {
