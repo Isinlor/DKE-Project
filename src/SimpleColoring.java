@@ -26,6 +26,7 @@ public class SimpleColoring {
             if(queue.isEmpty()) {
                 for (vertex = 1; vertex <= graph.getNumberOfVertices(); vertex++) {
                     if(vertexColor[vertex] == 0) {
+                        vertexColor[vertex] = 1;
                         queue.add(vertex);
                         break;
                     }
