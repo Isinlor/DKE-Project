@@ -1,15 +1,21 @@
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-public class NeighborSearch {
+public class NeighborhoodSearch {
 
-    static Graph graph;
-    static int[] vertexColor;
+    private Graph graph;
+    private int[] vertexColor;
+    private int timeLimit;
 
-    static void findUpperBound(Graph ofGraph) {
+    public NeighborhoodSearch(Graph graph, int timeLimit) {
+        this.graph = graph;
+        this.timeLimit = timeLimit;
+        vertexColor = new int[graph.getNumberOfVertices() + 1];
+    }
 
-        graph = ofGraph;
+    public void findUpperBound() {
 
         int numberOfVertices = graph.getNumberOfVertices();
         Random rng = new Random();
@@ -18,19 +24,18 @@ public class NeighborSearch {
         Integer[] newSortedVertices = sortedVertices.clone();
 
         long lastUpdateAt = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
+        while(!graph.hasChromaticNumber()) {
 
             int newUpperBound = findColoring(newSortedVertices, graph.getUpperBound());
             if(newUpperBound != 0) {
                 if(graph.getUpperBound() > newUpperBound) {
-                    System.out.print(".");
                     lastUpdateAt = System.currentTimeMillis();
                     graph.addSortedVertices(newUpperBound, new ConcurrentSkipListSet<>(Arrays.asList(newSortedVertices)));
                 }
                 sortedVertices = newSortedVertices;
             }
 
-            if(lastUpdateAt < (System.currentTimeMillis() - 1000)) return;
+            if(lastUpdateAt < (System.currentTimeMillis() - timeLimit)) return;
 
             newSortedVertices = sortedVertices.clone();
             swapVertices(numberOfVertices, rng, newSortedVertices);
@@ -39,7 +44,7 @@ public class NeighborSearch {
 
     }
 
-    private static void swapVertices(int numberOfVertices, Random rng, Integer[] newSortedVertices) {
+    private void swapVertices(int numberOfVertices, Random rng, Integer[] newSortedVertices) {
         int indexA = rng.nextInt(numberOfVertices);
         int vertexA = newSortedVertices[indexA];
 
@@ -51,7 +56,7 @@ public class NeighborSearch {
         newSortedVertices[indexB] = vertexA;
     }
 
-    private static int findColoring(Integer[] vertices, int maxColors) {
+    private int findColoring(Integer[] vertices, int maxColors) {
         int upperBound = 0;
         vertexColor = new int[graph.getNumberOfVertices() + 1];
         for (int vertex: vertices) {
@@ -69,7 +74,7 @@ public class NeighborSearch {
         return upperBound;
     }
 
-    private static boolean isAvailable(int vertexA, int color) {
+    private boolean isAvailable(int vertexA, int color) {
         for (int vertexB: graph.getNeighbours(vertexA)) {
             if (vertexColor[vertexB] == color) {
                 return false;
