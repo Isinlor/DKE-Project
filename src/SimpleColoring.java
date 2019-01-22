@@ -7,6 +7,8 @@ public class SimpleColoring {
 
     public static void color(Graph graph) {
 
+        if(graph.hasChromaticNumber()) return;
+
         int vertex = graph.getVertices().iterator().next();
 
         int[] vertexColor = new int[graph.getNumberOfVertices() + 1];
