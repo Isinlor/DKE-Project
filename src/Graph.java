@@ -1,7 +1,4 @@
-import java.awt.*;
 import java.util.*;
-import java.util.List;
-import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
@@ -15,7 +12,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  */
 public class Graph {
 
-    static final boolean PRINT = false;
+    static boolean PRINT_BOUNDS = true;
 
     /**
      * List of vertices.
@@ -73,7 +70,7 @@ public class Graph {
         }
 
         createAdjacencyMap();
-        if(edges.length > 0) { addLowerBound(2); };
+        setBounds();
 
     }
 
@@ -120,12 +117,12 @@ public class Graph {
         }
 
         createAdjacencyMap();
-        if(edges.length > 1) { addLowerBound(2); };
+        setBounds();
 
     }
 
     private void setVertices(int numberOfVertices) {
-        this.upperBound = numberOfVertices;
+        setUpperBound(numberOfVertices);
         for (int vertex = 1; vertex <= numberOfVertices; vertex++) {
             vertices.add(vertex);
         }
@@ -142,6 +139,12 @@ public class Graph {
         }
     }
 
+    private void setBounds() {
+        if(getNumberOfVertices() > 0) { addLowerBound(1); }
+        if(getNumberOfEdges() > 0) { addLowerBound(2); }
+        if(isComplete()) { addChromaticNumber(getNumberOfVertices()); }
+    }
+
     public int getNumberOfVertices() {
         return vertices.size();
     }
@@ -152,6 +155,10 @@ public class Graph {
 
     public int getMaxNumberOfEdges() {
         return (getNumberOfVertices() * (getNumberOfVertices() - 1)) / 2;
+    }
+
+    public double getDensity() {
+        return Math.round((float)getNumberOfEdges() / (float)getMaxNumberOfEdges()  * 100.0) / 100.0;
     }
 
     public boolean isComplete() {
@@ -165,24 +172,41 @@ public class Graph {
 
     public void addLowerBound(int lowerBound) {
         if(lowerBound > this.lowerBound) {
-            this.lowerBound = lowerBound;
-            if(PRINT) System.out.println("Lower bound = " + lowerBound);
+            setLowerBound(lowerBound);
         }
+        if(Thread.interrupted()) throw new RuntimeException();
+    }
+
+    private void setLowerBound(int lowerBound) {
+        this.lowerBound = lowerBound;
+        if(PRINT_BOUNDS) System.out.println("NEW BEST LOWER BOUND = " + lowerBound);
     }
 
     public void addUpperBound(int upperBound) {
         if(upperBound < this.upperBound) {
-            this.upperBound = upperBound;
-            if(PRINT) System.out.println("Upper bound = " + upperBound);
+            setUpperBound(upperBound);
         }
+        if(Thread.interrupted()) throw new RuntimeException();
+    }
+
+    private void setUpperBound(int upperBound) {
+        this.upperBound = upperBound;
+        if(PRINT_BOUNDS) System.out.println("NEW BEST UPPER BOUND = " + upperBound);
     }
 
     public int getLowerBound() {
+        if(Thread.interrupted()) throw new RuntimeException();
         return lowerBound;
     }
 
     public int getUpperBound() {
+        if(Thread.interrupted()) throw new RuntimeException();
         return upperBound;
+    }
+
+    public boolean hasChromaticNumber() {
+        if(Thread.interrupted()) throw new RuntimeException();
+        return upperBound == lowerBound;
     }
 
     /**
@@ -296,12 +320,6 @@ public class Graph {
             if(!verticesToRemove.contains(edge.from) && !verticesToRemove.contains(edge.to)) {
                 retainedEdges.add(edge);
             }
-//            else {
-//                System.out.print(edge);
-//                System.out.println("From degree: " + getDegree(edge.from));
-//                System.out.println("To degree: " + getDegree(edge.to));
-//                System.out.println();
-//            }
         }
 
         // map old retained edges, to new edges
@@ -318,6 +336,10 @@ public class Graph {
             return new Graph(lastEdge, 2);
         }
 
+        if(newEdges.isEmpty() && !vertices.isEmpty()) {
+            return new Graph(new Edge[0], 1);
+        }
+
         // return simplified graph
         return (new Graph(newEdges.toArray(new Edge[0]), oldToNewVertexMapping.size())).simplify();
 
@@ -331,11 +353,11 @@ public class Graph {
     }
 
     public String toString() {
-        String string = getShortDescription();
+        StringBuilder string = new StringBuilder(getShortDescription());
         for (Edge edge: edges) {
-            string += edge;
+            string.append(edge);
         }
-        return string;
+        return string.toString();
     }
 
 }
