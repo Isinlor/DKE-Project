@@ -29,15 +29,6 @@ public class Backtracking {
 
         if(graph.getUpperBound() == graph.getLowerBound()) return;
 
-        if(graph.getLowerBound() == 2) {
-            if (canBeColoredWith(2)) {
-                graph.addChromaticNumber(2);
-                return;
-            } else {
-                graph.addLowerBound(3);
-            }
-        }
-
         int upperBound = graph.getUpperBound() - 1;
         while (upperBound >= graph.getLowerBound() && canBeColoredWith(upperBound)) {
             graph.addUpperBound(upperBound);
@@ -54,7 +45,7 @@ public class Backtracking {
 
     private void setupNextVertexMap() {
         nextVertexMap = new ConcurrentSkipListMap<>();
-        SortedSet<Integer> sortedVertices = graph.getDescendingDegreeSortedVertices();
+        SortedSet<Integer> sortedVertices = graph.getSortedVertices();
         Iterator<Integer> sortedVerticesIteratorFrom = sortedVertices.iterator();
         Iterator<Integer> sortedVerticesIteratorTo = sortedVertices.iterator();
 
@@ -96,6 +87,7 @@ public class Backtracking {
     }
 
     private int nextVertex(int currentVertex) {
+        if(Thread.interrupted()) throw new RuntimeException();
         return nextVertexMap.get(currentVertex);
     }
 
