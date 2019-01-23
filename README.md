@@ -4,13 +4,7 @@
 
 You can find detailed contribution of each team member here: https://docs.google.com/spreadsheets/d/1np752UbjdXQngAB3N8CpQkXrkS8FtnJw7NpbkqnJLCI/edit#gid=0
 
-In directory tasks there are also 3 exports in different formats (ods, pdf, xlsx) of the each team member contribution.
-
-The game is intended to run from "src/Run.java" file.
-
-Unit tests are in "tests" directory. You can run "test/GraphTests.java". Important! Tests must be run with Must be run with -ea or -enableassertions option! 
-
-Here are the slides for the presentation: https://docs.google.com/presentation/d/1O6KO1KydLj4JQZKYvNhDzfKzo45gjUUPvWc-iqWu3F4/edit?usp=sharing
+You can run the program with `java -jar Group23.jar pathToGraph.txt`.
 
 # For team members:
 
