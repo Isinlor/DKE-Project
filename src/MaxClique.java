@@ -5,6 +5,7 @@ class MaxClique {
 
     private Graph graph;
     private Set<Integer> maxClique = new HashSet<>();
+    private int maxCliqueDegree;
 
     MaxClique(Graph graph) {
         this.graph = graph;
@@ -65,13 +66,6 @@ class MaxClique {
         return pivotVertex;
     }
 
-    private void addClique(Set<Integer> R) {
-        graph.addLowerBound(R.size());
-        if(R.size() > maxClique.size()) {
-            maxClique = new HashSet<>(R);
-        }
-    }
-
     /**
      * Intersection of two sets
      */
@@ -83,6 +77,32 @@ class MaxClique {
 
     private Set<Integer> getNeighbours(int x) {
         return graph.getNeighbours(x);
+    }
+
+    private void addClique(Set<Integer> clique) {
+        if(Thread.interrupted()) throw new RuntimeException();
+        graph.addLowerBound(clique.size());
+        if(clique.size() > maxClique.size()) {
+            setMaxClique(clique);
+        } else if(clique.size() == maxClique.size()) {
+            if(getDegree(clique) > maxCliqueDegree) {
+                setMaxClique(clique);
+            }
+        }
+    }
+
+    private void setMaxClique(Set<Integer> clique) {
+        maxClique = new HashSet<>();
+        maxClique.addAll(clique);
+        maxCliqueDegree = getDegree(clique);
+    }
+
+    private int getDegree(Set<Integer> clique) {
+        int degree = 0;
+        for (int vertex: clique) {
+            degree += graph.getDegree(vertex);
+        }
+        return degree;
     }
 
 }

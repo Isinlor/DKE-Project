@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.TimeoutException;
 
-public class LowerBoundBacktracking {
+public class TimedBacktracking {
 
     private Graph graph;
     private int[] vertexColor;
@@ -13,7 +13,7 @@ public class LowerBoundBacktracking {
 
     private long startTime;
 
-    public LowerBoundBacktracking(Graph graph) {
+    public TimedBacktracking(Graph graph) {
         this.graph = graph;
         setupVertexColor();
         setupNextVertexMap();
@@ -33,15 +33,30 @@ public class LowerBoundBacktracking {
 
         if(graph.getUpperBound() == graph.getLowerBound()) return;
 
-        for (int colors = graph.getLowerBound(); colors < graph.getUpperBound(); colors++) {
+        int nextLowerBound = graph.getLowerBound();
+        int nextUpperBound = graph.getUpperBound() - 1;
+
+        boolean flag = true;
+        while (nextLowerBound != nextUpperBound) {
             try {
+
+                int colors;
+                if(flag) {
+                    colors = nextLowerBound;
+                    nextLowerBound++;
+                } else {
+                    colors = nextUpperBound;
+                    nextUpperBound--;
+                }
+
                 if (canBeColoredWith(colors)) {
                     graph.addUpperBound(colors);
                 } else {
                     graph.addLowerBound(colors);
                 }
+
             } catch (TimeoutException e) {
-                // no op
+                flag = !flag;
             }
         }
 
@@ -60,6 +75,7 @@ public class LowerBoundBacktracking {
     private boolean tryToColor(int vertex) throws TimeoutException {
 
         if(System.currentTimeMillis() - startTime > 5000) {
+            if(Thread.interrupted()) throw new RuntimeException();
             throw new TimeoutException();
         }
 
